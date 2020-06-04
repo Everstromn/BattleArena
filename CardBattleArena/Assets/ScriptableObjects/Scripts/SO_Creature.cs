@@ -8,6 +8,7 @@ public class SO_Creature : SO_Card
     public CreatureType creatureType;
 
     public Sprite attackPattern;
+    public int attackRange;
     public int movement;
     public int damage;
     public int health;

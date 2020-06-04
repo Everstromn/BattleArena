@@ -1,0 +1,14 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class Utils : MonoBehaviour
+{
+    public static int SortByHealth(TokenManager t1, TokenManager t2)
+    {
+        return t1.currentHealth.CompareTo(t2.currentHealth);
+    }
+
+
+
+}

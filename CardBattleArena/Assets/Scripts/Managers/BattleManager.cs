@@ -37,8 +37,12 @@ public class BattleManager : MonoBehaviour
     public Team playerTeam;
     public Team otherTeam;
 
+    public int playerStartingHealth;
+
     public int remainingActions = 0;
     public int turnCounter = 0;
+
+    public float minPhaseTime = 0.5f;
 
     private void Start()
     {
@@ -79,28 +83,29 @@ public class BattleManager : MonoBehaviour
     private void ActivateUpkeepPhase()
     {
         remainingActions++;
-
+        StartCoroutine(MinDelayPhase());
         currentPhase = BattlePhase.Upkeep;
-        
+
+        turnCounter++;
         CurrencyManager.instance.IncreaseGoldPerTurn(1);
         CurrencyManager.instance.AddTurnGold();
         FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
 
         RefreshAllTokens();
 
-        remainingActions = 0;
+        remainingActions--;
     }
 
     private void ActivateDrawPhase()
     {
         remainingActions++;
-
+        StartCoroutine(MinDelayPhase());
         currentPhase = BattlePhase.Draw;
 
         PlayerDeckManager.instance.DrawCardFromDeck();
         FindObjectOfType<BattleArenaUIManager>().UpdateHandDisplay();
 
-        remainingActions = 0;
+        remainingActions--;
     }
 
     private void ActivateOrdersPhase()
@@ -113,20 +118,19 @@ public class BattleManager : MonoBehaviour
     private void ActivateActionPhase()
     {
         remainingActions++;
-
+        StartCoroutine(MinDelayPhase());
         currentPhase = BattlePhase.Action;
 
         TokenManager[] activeTokens = FindObjectsOfType<TokenManager>();
 
         foreach (TokenManager token in activeTokens)
         {
-            Debug.Log("Looping through Tokens " + token.name + token.myTeam);
-            Debug.Log("Current Team Color : " + currentTeamTurn);
+            float currentDelay = 0;
 
             if (token.myTeam == currentTeamTurn)
             {
                 remainingActions++;
-                token.ActionPhase();
+                currentDelay = token.ActionPhase(currentDelay);
             }
         }
 
@@ -136,11 +140,10 @@ public class BattleManager : MonoBehaviour
     private void ActivateCompletionPhase()
     {
         remainingActions++;
-
+        StartCoroutine(MinDelayPhase());
         currentPhase = BattlePhase.Completion;
 
-        turnCounter++;
-        remainingActions = 0;
+        remainingActions--;
     }
 
     public void SpawnTokenFromCard(SO_Card givenCard)
@@ -156,5 +159,12 @@ public class BattleManager : MonoBehaviour
         {
             token.UpkeepPhase();
         }
+    }
+
+    private IEnumerator MinDelayPhase()
+    {
+        remainingActions++;
+        yield return new WaitForSeconds(minPhaseTime);
+        remainingActions--;
     }
 }

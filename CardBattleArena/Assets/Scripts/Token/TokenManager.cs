@@ -1,45 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TokenManager : MonoBehaviour
 {
     public SpriteRenderer myTokenImageObj;
 
-    [SerializeField] private Sprite myTokensImage;
+    [SerializeField] protected Sprite myTokensImage;
 
-    [SerializeField] private SO_Card myCard;
-    private SO_Creature myCreatureCard;
+    public SO_Card myCard;
+    public SO_Creature myCreatureCard;
 
     public Team myTeam;
 
-    [SerializeField] private Material baseTokenMaterial = null;
+    [SerializeField] protected Material baseTokenMaterial = null;
 
-    [SerializeField] private Material blueTeamCreature = null;
-    [SerializeField] private Material blueTeamBuilding = null;
+    [SerializeField] protected Material blueTeamCreature = null;
+    [SerializeField] protected Material blueTeamBuilding = null;
 
-    [SerializeField] private Material redTeamCreature = null;
-    [SerializeField] private Material redTeamBuilding = null;
+    [SerializeField] protected Material redTeamCreature = null;
+    [SerializeField] protected Material redTeamBuilding = null;
 
-    private int maxMovement;
-    private int remainingMovement;
+    protected int maxMovement;
+    protected int remainingMovement;
 
     public Node seekerNode;
     public Node targetNode;
 
     public bool movementPreview;
 
-    private ArenaGrid myBattleGrid;
-    private List<Node> myPath = new List<Node>();
+    protected ArenaGrid myBattleGrid;
+    protected List<Node> myPath = new List<Node>();
     public int clicks = 0;
 
-    private void Start()
+    protected int attackRange;
+    protected int attackDamage;
+
+    public int maxHealth;
+    public int currentHealth = 1;
+
+    [SerializeField] protected GameObject damageDispalyObj = null;
+    [SerializeField] protected TMP_Text damageDisplayTextObj = null;
+
+    protected virtual void Start()
     {
         myBattleGrid = FindObjectOfType<ArenaGrid>();
         if(myCard != null) { TokenSetUp(); }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (movementPreview && ReturnNodeUnderMouse() != null)
         {
@@ -54,14 +64,14 @@ public class TokenManager : MonoBehaviour
         }
     }
 
-    public void OnSpawn(SO_Card givenCard, Team givenTeam)
+    public virtual void OnSpawn(SO_Card givenCard, Team givenTeam)
     {
         myCard = givenCard;
         TokenSetUp();
         myTeam = givenTeam;
     }
 
-    private void TokenSetUp()
+    protected virtual void TokenSetUp()
     {
         myTokensImage = myCard.cardImage;
         myTokenImageObj.sprite = myTokensImage;
@@ -69,14 +79,21 @@ public class TokenManager : MonoBehaviour
         if (myCard.cardType == CardType.Creature)
         {
             myCreatureCard = myCard as SO_Creature;
+
+            maxHealth = myCreatureCard.health;
+            currentHealth = maxHealth;
+
             maxMovement = myCreatureCard.movement;
             remainingMovement = 0;
+
+            attackRange = myCreatureCard.attackRange;
+            attackDamage = myCreatureCard.damage;
         }
 
         GetComponent<MeshRenderer>().material = TokenMaterial();
     }
 
-    private Material TokenMaterial()
+    protected virtual Material TokenMaterial()
     {
         if(myTeam == Team.Blue)
         {
@@ -92,7 +109,7 @@ public class TokenManager : MonoBehaviour
         return baseTokenMaterial;
     }
 
-    private Node ReturnNodeUnderMouse()
+    protected virtual Node ReturnNodeUnderMouse()
     {
         Node mouseNode = null;
         RaycastHit hitInfo;
@@ -101,7 +118,7 @@ public class TokenManager : MonoBehaviour
         return mouseNode;
     }
 
-    private Node ReturnNodeIAmOn()
+    protected virtual Node ReturnNodeIAmOn()
     {
         Node currentNode = null;
         RaycastHit hitInfo;
@@ -110,7 +127,7 @@ public class TokenManager : MonoBehaviour
         return currentNode;
     }
 
-    public void MoveToken()
+    public virtual void MoveToken()
     {
         Debug.Log("Confirmed Movement");
         foreach (Node node in myBattleGrid.grid) { node.RemoveHighlight(); }
@@ -118,7 +135,7 @@ public class TokenManager : MonoBehaviour
         StartCoroutine(MoveTokenOverTime());
     }
 
-    private IEnumerator MoveTokenOverTime()
+    protected virtual IEnumerator MoveTokenOverTime()
     {
         int usedMovement = 0;
 
@@ -137,23 +154,87 @@ public class TokenManager : MonoBehaviour
 
     }
 
-    public void ClearPathHighlights()
+    public virtual void ClearPathHighlights()
     {
         foreach (Node node in myBattleGrid.grid) { node.RemoveHighlight(); }
     }
 
-    public void UpkeepPhase()
+    public virtual void UpkeepPhase()
     {
         remainingMovement = maxMovement; 
     }
 
-    public void ActionPhase()
+    public virtual float ActionPhase(float givenDelay)
     {
+        float currentDelay = givenDelay;
 
+        // Search for enemy tokens within X squares
+        List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), attackRange);
+        List<TokenManager> enemiesInRange = new List<TokenManager>();
 
-        Debug.Log(this.name + "IN ACTION PHASE");
+        foreach (Node node in nodesInRange)
+        {
+            if(node.occupied) { if (node.ReturnTokenOnNode().myTeam != myTeam) { enemiesInRange.Add(node.ReturnTokenOnNode()); } }
+        }
+
+        foreach (TokenManager enemy in enemiesInRange) { currentDelay = currentDelay + 0.5f; }
+
+        // Order the enemies based off a value (lowest health first)
+        enemiesInRange.Sort(Utils.SortByHealth);
+
+        StartCoroutine(DealDamageOverTime(enemiesInRange, currentDelay));
 
         BattleManager.instance.remainingActions--;
+        return currentDelay;
     }
 
+    protected virtual IEnumerator DealDamageOverTime(List<TokenManager> enemiesToBeAttacked, float currentDelay)
+    {
+
+        for (int i = 0; i < enemiesToBeAttacked.Count; i++)
+        {
+            BattleManager.instance.remainingActions++;
+        }
+
+        for (int i = 0; i < enemiesToBeAttacked.Count; i++)
+        {
+            yield return new WaitForSeconds(1 * i + currentDelay);
+            Debug.Log(this.name + " is dealing damage to enemy : " + enemiesToBeAttacked[i].name);
+            enemiesToBeAttacked[i].TakeDamage(attackDamage);
+            BattleManager.instance.remainingActions--;
+        }
+
+    }
+
+    public virtual void TakeDamage(int damage)
+    {
+        currentHealth = currentHealth - damage;
+        StartCoroutine(ActivateDamageDisplay(damage));
+    }
+
+    protected virtual IEnumerator ActivateDamageDisplay(int damage)
+    {
+        damageDispalyObj.SetActive(true);
+        damageDisplayTextObj.text = damage.ToString();
+
+        yield return new WaitForSeconds(0.5f);
+
+        damageDispalyObj.SetActive(false);
+        if (currentHealth <= 0) { Death(); }
+    }
+
+    protected virtual void Death()
+    {
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnMouseOver()
+    {
+        FindObjectOfType<BattleArenaUIManager>().DisplayHover(this);
+    }
+
+    protected virtual void OnMouseExit()
+    {
+        FindObjectOfType<BattleArenaUIManager>().HideHover();
+    }
 }

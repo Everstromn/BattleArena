@@ -22,6 +22,7 @@ MonoBehaviour:
   cardType: 0
   creatureType: 1
   attackPattern: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  attackRange: 1
   movement: 2
   damage: 1
   health: 9
