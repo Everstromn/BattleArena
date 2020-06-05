@@ -84,4 +84,14 @@ public class ArenaGrid : MonoBehaviour
         return neighbours;
     }
 
+    public int GetDistance(Node nodeA, Node nodeB)
+    {
+
+        int distanceX = Mathf.Abs(nodeA.xRow - nodeB.xRow);
+        int distanceY = Mathf.Abs(nodeA.yRow - nodeB.yRow);
+
+        if (distanceX > distanceY) { return 14 * distanceY + 10 * (distanceX - distanceY); } else { return 14 * distanceX + 10 * (distanceY - distanceX); }
+
+    }
+
 }

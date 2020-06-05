@@ -51,7 +51,7 @@ public class TokenManager : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (movementPreview && ReturnNodeUnderMouse() != null)
+        if (movementPreview && ReturnNodeUnderMouse() != null && myTeam == BattleManager.instance.playerTeam)
         {
             seekerNode = ReturnNodeIAmOn();
             targetNode = ReturnNodeUnderMouse();
@@ -138,10 +138,10 @@ public class TokenManager : MonoBehaviour
     protected virtual IEnumerator MoveTokenOverTime()
     {
         int usedMovement = 0;
-
         for (int i = 0; i < remainingMovement; i++)
         {
-            if(i < myPath.Count)
+
+            if (i < myPath.Count)
             {
                 Vector3 tilePosition = new Vector3(myPath[i].transform.position.x, myPath[i].transform.position.y + 0.5f, myPath[i].transform.position.z);
                 transform.position = tilePosition;
@@ -164,10 +164,8 @@ public class TokenManager : MonoBehaviour
         remainingMovement = maxMovement; 
     }
 
-    public virtual float ActionPhase(float givenDelay)
+    public virtual void ActionPhase(float givenDelay)
     {
-        float currentDelay = givenDelay;
-
         // Search for enemy tokens within X squares
         List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), attackRange);
         List<TokenManager> enemiesInRange = new List<TokenManager>();
@@ -177,33 +175,26 @@ public class TokenManager : MonoBehaviour
             if(node.occupied) { if (node.ReturnTokenOnNode().myTeam != myTeam) { enemiesInRange.Add(node.ReturnTokenOnNode()); } }
         }
 
-        foreach (TokenManager enemy in enemiesInRange) { currentDelay = currentDelay + 0.5f; }
-
         // Order the enemies based off a value (lowest health first)
         enemiesInRange.Sort(Utils.SortByHealth);
 
-        StartCoroutine(DealDamageOverTime(enemiesInRange, currentDelay));
+        foreach (TokenManager token in enemiesInRange)
+        {
+            StartCoroutine(DealDamageAfterTime(givenDelay, token));
+        }
 
         BattleManager.instance.remainingActions--;
-        return currentDelay;
     }
 
-    protected virtual IEnumerator DealDamageOverTime(List<TokenManager> enemiesToBeAttacked, float currentDelay)
+    protected virtual IEnumerator DealDamageAfterTime(float currentDelay, TokenManager enemnyToBeAttacked)
     {
+        BattleManager.instance.remainingActions++;
 
-        for (int i = 0; i < enemiesToBeAttacked.Count; i++)
-        {
-            BattleManager.instance.remainingActions++;
-        }
+        yield return new WaitForSeconds(currentDelay + 0.75f);
 
-        for (int i = 0; i < enemiesToBeAttacked.Count; i++)
-        {
-            yield return new WaitForSeconds(1 * i + currentDelay);
-            Debug.Log(this.name + " is dealing damage to enemy : " + enemiesToBeAttacked[i].name);
-            enemiesToBeAttacked[i].TakeDamage(attackDamage);
-            BattleManager.instance.remainingActions--;
-        }
-
+        Debug.Log(this.name + " is dealing damage to enemy : " + enemnyToBeAttacked.name);
+        enemnyToBeAttacked.TakeDamage(attackDamage);
+        BattleManager.instance.remainingActions--;
     }
 
     public virtual void TakeDamage(int damage)
@@ -236,5 +227,30 @@ public class TokenManager : MonoBehaviour
     protected virtual void OnMouseExit()
     {
         FindObjectOfType<BattleArenaUIManager>().HideHover();
+    }
+
+    public virtual void MoveTokenViaAI(Node givenTargetNode)
+    {
+        seekerNode = ReturnNodeIAmOn();
+        targetNode = ReturnClosestToNode(givenTargetNode);
+        myPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
+        StartCoroutine(MoveTokenOverTime());
+        BattleManager.instance.remainingActions--;
+    }
+
+    private Node ReturnClosestToNode(Node target)
+    {
+        Node selectedNode = target;
+        List<Node> selectedNodesNeighbours = myBattleGrid.GetNeighbours(selectedNode);
+
+        while (selectedNode.occupied)
+        {
+            selectedNodesNeighbours.Remove(selectedNode);
+            foreach (Node node in selectedNodesNeighbours) { node.pathfinderDistanceToNode = myBattleGrid.GetDistance(node, target); }
+            selectedNodesNeighbours.Sort(Utils.SortByDistanceToNode);            
+            selectedNode = selectedNodesNeighbours[0];
+        }
+
+        return selectedNode;
     }
 }

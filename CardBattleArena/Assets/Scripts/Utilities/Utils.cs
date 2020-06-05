@@ -9,6 +9,10 @@ public abstract class Utils : MonoBehaviour
         return t1.currentHealth.CompareTo(t2.currentHealth);
     }
 
+    public static int SortByDistanceToNode(Node n1, Node n2)
+    {
+        return n1.pathfinderDistanceToNode.CompareTo(n2.pathfinderDistanceToNode);
+    }
 
 
 }

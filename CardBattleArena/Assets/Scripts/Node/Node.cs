@@ -22,6 +22,8 @@ public class Node : MonoBehaviour
     public Material canMoveMaterial;
     public Material canMoveLaterMaterial;
 
+    public int pathfinderDistanceToNode;
+
     private void Awake() { baseMaterial = GetComponent<MeshRenderer>().material; }
 
     private bool CheckForOccupied()
@@ -42,6 +44,5 @@ public class Node : MonoBehaviour
     public void HighlightMoveNow() { GetComponent<MeshRenderer>().material = canMoveMaterial; }
     public void HighlightMoveLater() { GetComponent<MeshRenderer>().material = canMoveLaterMaterial; }
     public void RemoveHighlight() { GetComponent<MeshRenderer>().material = baseMaterial; }
-
 
 }

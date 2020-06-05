@@ -19,7 +19,15 @@ public class PhaseTrackingButton : MonoBehaviour
 
     private void Update()
     {
-        if(BattleManager.instance.currentPhase == myPhase) { myImage.color = myActiveColor; } else { myImage.color = myBaseColor; }
+        if(BattleManager.instance.currentPhase == myPhase)
+        {
+            if (BattleManager.instance.currentTeamTurn == BattleManager.instance.playerTeam)
+            { myImage.color = BattleManager.instance.playerTeamColor; } else { myImage.color = BattleManager.instance.otherTeamColor; }
+        }
+        else
+        {
+            myImage.color = myBaseColor;
+        }
     }
 
 }

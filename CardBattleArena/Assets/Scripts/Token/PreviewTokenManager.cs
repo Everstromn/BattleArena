@@ -11,6 +11,7 @@ public class PreviewTokenManager : MonoBehaviour
     [SerializeField] private SO_Card myCard;
 
     private Vector3 snappedPos;
+    private Vector3 allowedSnappedPos;
     private Node hoveredNode;
 
     public void OnSpawn(SO_Card card)
@@ -43,12 +44,13 @@ public class PreviewTokenManager : MonoBehaviour
             && !hoveredNode.occupied)
         {
             transform.position = snappedPos;
+            allowedSnappedPos = snappedPos;
         }
     }
 
     private void SpawnProperToken()
     {
-        GameObject newToken = Instantiate(prefabToken, snappedPos, Quaternion.identity);
+        GameObject newToken = Instantiate(prefabToken, allowedSnappedPos, Quaternion.identity);
         newToken.transform.SetParent(transform.parent);
         newToken.GetComponent<TokenManager>().OnSpawn(myCard, Team.Blue);
         CurrencyManager.instance.AlterGold(-myCard.cost);

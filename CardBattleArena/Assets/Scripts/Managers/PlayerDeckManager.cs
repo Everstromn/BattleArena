@@ -48,5 +48,17 @@ public class PlayerDeckManager : MonoBehaviour
         }
     }
 
+    public void ShufflePlayerDeck()
+    {
+        Debug.Log("Shuffling Deck");
+
+        for (int i = 0; i < playerDeck.Count; i++)
+        {
+            SO_Card temp = playerDeck[i];
+            int randomIndex = Random.Range(i, playerDeck.Count);
+            playerDeck[i] = playerDeck[randomIndex];
+            playerDeck[randomIndex] = temp;
+        }
+    }
 
 }

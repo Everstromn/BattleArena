@@ -290,6 +290,7 @@ MonoBehaviour:
   myTokenImageObj: {fileID: 37905244192521273}
   myTokensImage: {fileID: 0}
   myCard: {fileID: 0}
+  myCreatureCard: {fileID: 0}
   myTeam: 0
   baseTokenMaterial: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
   blueTeamCreature: {fileID: 2100000, guid: 94872cb9853a0ea4c8de2f806d3100a5, type: 2}
@@ -596,7 +597,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1114805078294740796
 MonoBehaviour:

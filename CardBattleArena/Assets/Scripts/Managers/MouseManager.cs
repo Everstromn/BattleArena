@@ -23,12 +23,12 @@ public class MouseManager : MonoBehaviour
                     selectedToken.movementPreview = false;
                     selectedToken.ClearPathHighlights();
                     selectedToken = null;
-                    Debug.Log("Deselected Token");
+                    
                 }
 
             }
 
-            if (selectedToken == null && ReturnTokenUnderMouse() != null) { selectedToken = ReturnTokenUnderMouse(); selectedToken.movementPreview = true; Debug.Log("Selected Token" + selectedToken); }
+            if (selectedToken == null && ReturnTokenUnderMouse() != null) { selectedToken = ReturnTokenUnderMouse(); selectedToken.movementPreview = true; }
             }
 
         else if(Input.GetMouseButtonDown(1))
@@ -38,7 +38,7 @@ public class MouseManager : MonoBehaviour
                 selectedToken.movementPreview = false;
                 selectedToken.ClearPathHighlights();
                 selectedToken = null;
-                Debug.Log("Deselected Token");
+                
             }
         }
 
