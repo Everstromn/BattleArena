@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeaa7f44ee2c94246aebf1a4b1de13a4, type: 3}
+  m_Name: Tower
+  m_EditorClassIdentifier: 
+  cardName: Archery Tower
+  cardTint:
+    serializedVersion: 2
+    rgba: 1685359649
+  cost: 12
+  cardImage: {fileID: 21300000, guid: 023d9926239264d45bac242a8eadb29c, type: 3}
+  cardText: 'A basic tower that can attack enemies within range for a small amount
+    of damage
+
+    Range : 3
+
+    Damage : 1'
+  cardType: 2
+  attackRange: 3
+  damage: 1
+  health: 80
+  impactsGoldPerTurn: 0
+  goldPerTurnIncrease: 0

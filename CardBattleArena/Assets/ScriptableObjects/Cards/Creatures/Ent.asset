@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27b7fab80933d94e89748e1c1e4e4cc, type: 3}
+  m_Name: Ent
+  m_EditorClassIdentifier: 
+  cardName: The Old Forest Man
+  cardTint:
+    serializedVersion: 2
+    rgba: 1687384098
+  cost: 25
+  cardImage: {fileID: 21300000, guid: 8b0dc4c7592b16941af536c72dd4dd52, type: 3}
+  cardText: No one knows how long he has been wandering, or what he is looking for!
+  cardType: 0
+  creatureType: 1
+  attackPattern: {fileID: 0}
+  attackRange: 1
+  movement: 2
+  damage: 10
+  health: 45

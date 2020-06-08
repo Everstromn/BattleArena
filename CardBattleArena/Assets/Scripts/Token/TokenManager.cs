@@ -11,16 +11,25 @@ public class TokenManager : MonoBehaviour
 
     public SO_Card myCard;
     public SO_Creature myCreatureCard;
+    public SO_Building myBuildingCard;
 
     public Team myTeam;
+
+    protected MeshRenderer myMeshRenderer;
 
     [SerializeField] protected Material baseTokenMaterial = null;
 
     [SerializeField] protected Material blueTeamCreature = null;
+    [SerializeField] protected Material blueTeamCreatureAction = null;
     [SerializeField] protected Material blueTeamBuilding = null;
 
     [SerializeField] protected Material redTeamCreature = null;
+    [SerializeField] protected Material redTeamCreatureAction = null;
     [SerializeField] protected Material redTeamBuilding = null;
+
+    protected bool emission = false;
+    protected bool actionRemaining = false;
+    [SerializeField] protected GameObject actionPuck;
 
     protected int maxMovement;
     protected int remainingMovement;
@@ -43,36 +52,76 @@ public class TokenManager : MonoBehaviour
     [SerializeField] protected GameObject damageDispalyObj = null;
     [SerializeField] protected TMP_Text damageDisplayTextObj = null;
 
+    protected bool haveSetUp = false;
+
     protected virtual void Start()
     {
         myBattleGrid = FindObjectOfType<ArenaGrid>();
-        if(myCard != null) { TokenSetUp(); }
+        myMeshRenderer = GetComponent<MeshRenderer>();
+        if (!haveSetUp) { TokenSetUp(); }
     }
 
     protected virtual void Update()
     {
-        if (movementPreview && ReturnNodeUnderMouse() != null && myTeam == BattleManager.instance.playerTeam)
+        if(myCard.cardType == CardType.Creature)
         {
-            seekerNode = ReturnNodeIAmOn();
-            targetNode = ReturnNodeUnderMouse();
-            myPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
-            ClearPathHighlights();
-            for (int i = 0; i < myPath.Count; i++)
+            if (movementPreview && ReturnNodeUnderMouse() != null && myTeam == BattleManager.instance.playerTeam)
             {
-                if(i < remainingMovement) { myPath[i].HighlightMoveNow(); } else { myPath[i].HighlightMoveLater(); }
+                seekerNode = ReturnNodeIAmOn();
+                targetNode = ReturnNodeUnderMouse();
+                myPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
+                ClearPathHighlights();
+                for (int i = 0; i < myPath.Count; i++)
+                {
+                    if (i < remainingMovement) { myPath[i].HighlightMoveNow(); } else { myPath[i].HighlightMoveLater(); }
+                }
             }
+
+            if (BattleManager.instance.currentPhase == BattlePhase.Orders)
+            {
+                if (remainingMovement > 0 && myTeam == BattleManager.instance.currentTeamTurn)
+                {
+                    actionPuck.SetActive(true);
+                }
+                else
+                {
+                    actionPuck.SetActive(false);
+                }
+            }
+
+            if (BattleManager.instance.currentPhase == BattlePhase.Action)
+            {
+                if (actionRemaining&& myTeam == BattleManager.instance.currentTeamTurn)
+                {
+                    actionPuck.SetActive(true);
+                }
+                else
+                {
+                    actionPuck.SetActive(false);
+                }
+            }
+
+            if (BattleManager.instance.currentPhase != BattlePhase.Action && BattleManager.instance.currentPhase != BattlePhase.Orders)
+            {
+                if (actionPuck.activeSelf)
+                {
+                    actionPuck.SetActive(false);
+                }
+            }
+
         }
     }
 
     public virtual void OnSpawn(SO_Card givenCard, Team givenTeam)
     {
         myCard = givenCard;
-        TokenSetUp();
+        if (!haveSetUp) { TokenSetUp(); }
         myTeam = givenTeam;
     }
 
     protected virtual void TokenSetUp()
     {
+        haveSetUp = true;        
         myTokensImage = myCard.cardImage;
         myTokenImageObj.sprite = myTokensImage;
 
@@ -90,6 +139,19 @@ public class TokenManager : MonoBehaviour
             attackDamage = myCreatureCard.damage;
         }
 
+        if (myCard.cardType == CardType.Building)
+        {
+            myBuildingCard= myCard as SO_Building;
+
+            maxHealth = myBuildingCard.health;
+            currentHealth = maxHealth;
+
+            attackRange = myBuildingCard.attackRange;
+            attackDamage = myBuildingCard.damage;
+
+            if(myBuildingCard.impactsGoldPerTurn) { CurrencyManager.instance.IncreaseGoldPerTurn(myBuildingCard.goldPerTurnIncrease); }
+        }
+
         GetComponent<MeshRenderer>().material = TokenMaterial();
     }
 
@@ -97,12 +159,12 @@ public class TokenManager : MonoBehaviour
     {
         if(myTeam == Team.Blue)
         {
-            if (myCard.cardType == CardType.Creature) { return blueTeamCreature; }
+            if (myCard.cardType == CardType.Creature) { if (emission) { return blueTeamCreatureAction; } else { return blueTeamCreature; } }
             if (myCard.cardType == CardType.Building) { return blueTeamBuilding; }
         }
         else if (myTeam == Team.Red)
         {
-            if (myCard.cardType == CardType.Creature) { return redTeamCreature; }
+            if (myCard.cardType == CardType.Creature) { if (emission) { return redTeamCreatureAction; } else { return redTeamCreature; } }
             if (myCard.cardType == CardType.Building) { return redTeamBuilding; }
         }
 
@@ -161,11 +223,13 @@ public class TokenManager : MonoBehaviour
 
     public virtual void UpkeepPhase()
     {
-        remainingMovement = maxMovement; 
+        remainingMovement = maxMovement;
     }
 
     public virtual void ActionPhase(float givenDelay)
     {
+        actionRemaining = true;
+        
         // Search for enemy tokens within X squares
         List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), attackRange);
         List<TokenManager> enemiesInRange = new List<TokenManager>();
@@ -192,8 +256,12 @@ public class TokenManager : MonoBehaviour
 
         yield return new WaitForSeconds(currentDelay + 0.75f);
 
-        Debug.Log(this.name + " is dealing damage to enemy : " + enemnyToBeAttacked.name);
-        enemnyToBeAttacked.TakeDamage(attackDamage);
+        if(enemnyToBeAttacked != null)
+        {
+            Debug.Log(this.name + " is dealing damage to enemy : " + enemnyToBeAttacked.name);
+            enemnyToBeAttacked.TakeDamage(attackDamage);
+            actionRemaining = false;
+        }
         BattleManager.instance.remainingActions--;
     }
 
@@ -216,7 +284,16 @@ public class TokenManager : MonoBehaviour
 
     protected virtual void Death()
     {
-        Destroy(gameObject);
+        if (myCard.cardType == CardType.Building)
+        {
+            if (myBuildingCard.impactsGoldPerTurn)
+            {
+                CurrencyManager.instance.IncreaseGoldPerTurn(-myBuildingCard.goldPerTurnIncrease);
+                FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
+            }
+        }
+
+            Destroy(gameObject);
     }
 
     protected virtual void OnMouseOver()
@@ -232,10 +309,14 @@ public class TokenManager : MonoBehaviour
     public virtual void MoveTokenViaAI(Node givenTargetNode)
     {
         seekerNode = ReturnNodeIAmOn();
-        targetNode = ReturnClosestToNode(givenTargetNode);
-        myPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
-        StartCoroutine(MoveTokenOverTime());
-        BattleManager.instance.remainingActions--;
+
+        if(myBattleGrid.GetDistance(seekerNode, givenTargetNode) > myCreatureCard.attackRange)
+        {
+            targetNode = ReturnClosestToNode(givenTargetNode);
+            myPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
+            StartCoroutine(MoveTokenOverTime());
+            BattleManager.instance.remainingActions--;
+        }
     }
 
     private Node ReturnClosestToNode(Node target)

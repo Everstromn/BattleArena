@@ -403,11 +403,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7066529972b01b3489dc968ebb402235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardFadingObj: {fileID: 0}
   cardFadingCards:
+  - {fileID: 11400000, guid: 0404a5aba545c3541b3fb7a4f93860fc, type: 2}
   - {fileID: 11400000, guid: 6195ffc97663eb042a772cb7b99e30cb, type: 2}
+  - {fileID: 11400000, guid: 47ed82ee81a95054387f228af7174f76, type: 2}
+  - {fileID: 11400000, guid: 14d94696bfb6dd44c9fee2f979cedf03, type: 2}
   - {fileID: 11400000, guid: b9bd2905885ac534fadb7f15a5f31e9d, type: 2}
+  - {fileID: 11400000, guid: 9b24a1c497b6db14aa894515886b9285, type: 2}
+  - {fileID: 11400000, guid: be470608823babc498623d871f2948ec, type: 2}
+  - {fileID: 11400000, guid: 9dbf2fef482a63c438e20315deff1d0f, type: 2}
   - {fileID: 11400000, guid: dfc331ee82879614195697d97260d09a, type: 2}
+  - {fileID: 11400000, guid: acc17d723e8ee9a4f85cfb752a770c3f, type: 2}
 --- !u!1 &360928380
 GameObject:
   m_ObjectHideFlags: 0

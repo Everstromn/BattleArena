@@ -5,7 +5,10 @@ using UnityEngine;
 public class PreviewTokenManager : MonoBehaviour
 {
     public SpriteRenderer myTokenImageObj;
-    public GameObject prefabToken;
+
+    public GameObject prefabBuildingToken;
+    public GameObject prefabCreatueToken;
+    private GameObject tokenToUse;
 
     [SerializeField] private Sprite myTokensImage;
     [SerializeField] private SO_Card myCard;
@@ -13,6 +16,8 @@ public class PreviewTokenManager : MonoBehaviour
     private Vector3 snappedPos;
     private Vector3 allowedSnappedPos;
     private Node hoveredNode;
+
+    private float yOffset;
 
     public void OnSpawn(SO_Card card)
     {
@@ -37,7 +42,11 @@ public class PreviewTokenManager : MonoBehaviour
     private void SnapToGrid(Collider collisionNode)
     {
         hoveredNode = collisionNode.GetComponent<Node>();
-        snappedPos = new Vector3(collisionNode.transform.position.x, collisionNode.transform.position.y + 0.5f, collisionNode.transform.position.z);
+        yOffset = 0;
+        if (myCard.cardType == CardType.Creature) { yOffset = 0.5f; }
+        if (myCard.cardType == CardType.Building) { yOffset = 0.75f; }
+
+            snappedPos = new Vector3(collisionNode.transform.position.x, collisionNode.transform.position.y + yOffset, collisionNode.transform.position.z);
         if ( 
             myCard.cardType == hoveredNode.tileType 
             && BattleManager.instance.playerTeam == hoveredNode.tileTeam 
@@ -50,7 +59,11 @@ public class PreviewTokenManager : MonoBehaviour
 
     private void SpawnProperToken()
     {
-        GameObject newToken = Instantiate(prefabToken, allowedSnappedPos, Quaternion.identity);
+
+        if (myCard.cardType == CardType.Creature) { tokenToUse = prefabCreatueToken; }
+        if (myCard.cardType == CardType.Building) { tokenToUse = prefabBuildingToken; }
+               
+        GameObject newToken = Instantiate(tokenToUse, allowedSnappedPos, Quaternion.identity);
         newToken.transform.SetParent(transform.parent);
         newToken.GetComponent<TokenManager>().OnSpawn(myCard, Team.Blue);
         CurrencyManager.instance.AlterGold(-myCard.cost);

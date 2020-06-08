@@ -30,6 +30,8 @@ public class PlayerDeckManager : MonoBehaviour
     [SerializeField] private List<SO_Card> playerDeck = new List<SO_Card>();
     public List<SO_Card> playerHand = new List<SO_Card>();
 
+    public int ReturnDeckSize() { return playerDeck.Count; }
+
     public void AddCardToDeck(SO_Card cardToAdd) { playerDeck.Add(cardToAdd); }
 
     public void DrawCardFromDeck()

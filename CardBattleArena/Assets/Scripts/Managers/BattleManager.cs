@@ -29,10 +29,16 @@ public class BattleManager : MonoBehaviour
     }
 
     public bool battleActive;
-    [SerializeField] private float battleStartDelay = 7;
+    [SerializeField] private float battleStartDelay = 5;
 
-    public GameObject prefabToken;
-    public GameObject prefabTokenPreview;
+    public GameObject prefabCreatureToken;
+    public GameObject prefabBuildingToken;
+
+    public GameObject prefabCreatureTokenPreview;
+    public GameObject prefabBuildingTokenPreview;
+
+    private GameObject newToken;
+
     public GameObject Arena;
     public BattlePhase currentPhase;
     public Team currentTeamTurn;
@@ -45,6 +51,8 @@ public class BattleManager : MonoBehaviour
     public Node playerHQNode;
 
     public int playerStartingHealth;
+    public int cardsPerDraw = 2;
+    public int maxHandSize = 5;
 
     public int remainingActions = 0;
     public int turnCounter = 0;
@@ -60,6 +68,7 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
+        FindObjectOfType<BattleArenaUIManager>().SetDeckSize();
         battleActive = false;
         StartCoroutine(BattleInitiationDelay());
     }
@@ -110,17 +119,16 @@ public class BattleManager : MonoBehaviour
 
         if (currentTeamTurn == playerTeam) { currentTeamTurn = otherTeam; } else { currentTeamTurn = playerTeam; }
 
+        RefreshAllTokens();
+
         if (currentTeamTurn == playerTeam)
         {
             turnCounter++;
             CurrencyManager.instance.IncreaseGoldPerTurn(1);
             CurrencyManager.instance.AddTurnGold();
             FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
-
         }
-
-        RefreshAllTokens();
-
+        
         remainingActions--;
     }
 
@@ -132,9 +140,20 @@ public class BattleManager : MonoBehaviour
 
         if (currentTeamTurn == playerTeam)
         {
-            PlayerDeckManager.instance.DrawCardFromDeck();
-            FindObjectOfType<BattleArenaUIManager>().UpdateHandDisplay();
+            if(turnCounter == 1) { PlayerDeckManager.instance.DrawCardFromDeck(); PlayerDeckManager.instance.DrawCardFromDeck(); }
+
+            for (int i = 0; i < cardsPerDraw; i++)
+            {
+                if (PlayerDeckManager.instance.playerHand.Count < maxHandSize)
+                {
+
+                    PlayerDeckManager.instance.DrawCardFromDeck();
+                }
+            }
+
         }
+
+        FindObjectOfType<BattleArenaUIManager>().UpdateHandDisplay();
 
         remainingActions--;
     }
@@ -187,7 +206,11 @@ public class BattleManager : MonoBehaviour
 
     public void SpawnTokenFromCard(SO_Card givenCard)
     {
-        GameObject newToken = Instantiate(prefabTokenPreview, Arena.transform);
+        newToken = null;
+
+        if (givenCard.cardType == CardType.Creature) { newToken = Instantiate(prefabCreatureTokenPreview, Arena.transform); }
+        if (givenCard.cardType == CardType.Building) { newToken = Instantiate(prefabBuildingTokenPreview, Arena.transform); }
+
         newToken.GetComponent<PreviewTokenManager>().OnSpawn(givenCard);
     }
 
@@ -259,7 +282,7 @@ public class BattleManager : MonoBehaviour
     private void AISpawnToken(Node spawnNode, SO_Card spawnCard)
     {
         Vector3 spawnPos = new Vector3(spawnNode.transform.position.x, spawnNode.transform.position.y + 0.5f, spawnNode.transform.position.z);
-        GameObject newToken = Instantiate(prefabToken, spawnPos, Quaternion.identity);
+        GameObject newToken = Instantiate(prefabCreatureToken, spawnPos, Quaternion.identity);
         newToken.transform.SetParent(GameObject.Find("RedTokens").transform);
         newToken.GetComponent<TokenManager>().OnSpawn(spawnCard, Team.Red);
     }

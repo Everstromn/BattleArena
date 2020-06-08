@@ -45,4 +45,9 @@ public class Node : MonoBehaviour
     public void HighlightMoveLater() { GetComponent<MeshRenderer>().material = canMoveLaterMaterial; }
     public void RemoveHighlight() { GetComponent<MeshRenderer>().material = baseMaterial; }
 
+    private void Update()
+    {
+        
+    }
+
 }

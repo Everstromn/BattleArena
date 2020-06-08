@@ -9,10 +9,13 @@ public class BattleArenaUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefabCard = null;
     [SerializeField] private GameObject cardDisplayObj = null;
+    [SerializeField] private GameObject cardPreviewObj = null;
+
     [SerializeField] private TMP_Text phaseDisplayTextObj = null;
     [SerializeField] private TMP_Text currentGoldDispalyTextObj = null;
     [SerializeField] private TMP_Text turnGoldDispalyTextObj = null;
     [SerializeField] private TMP_Text turnDisplayTextObj = null;
+    [SerializeField] private TMP_Text deckDispalyTextObj = null;
 
     [SerializeField] private GameObject hoverIcon = null;
 
@@ -23,12 +26,12 @@ public class BattleArenaUIManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera cameraPos03 = null;
     [SerializeField] private CinemachineVirtualCamera cameraPos04 = null;
 
+    private int startingDeckSize = 0;
+
     private int cameraCurrentPos = 1;
 
     public void RotateCameraPos(int val)
-    {
-        Debug.Log("Called");
-
+    { 
         if (cameraCurrentPos == 4 && val == 1) { cameraCurrentPos = 1; }
         else if (cameraCurrentPos == 1 && val == -1) { cameraCurrentPos = 4; }
         else cameraCurrentPos = cameraCurrentPos + val;
@@ -104,9 +107,26 @@ public class BattleArenaUIManager : MonoBehaviour
             newCard.GetComponent<CardManager>().myCard = card;
             newCard.GetComponent<CardManager>().UpdateValuesFromCardAsset();
         }
+
+        deckDispalyTextObj.text = PlayerDeckManager.instance.ReturnDeckSize().ToString() + " / " + startingDeckSize; 
     }
 
     public void DisplayHover(TokenManager token) { hoverIcon.SetActive(true); hoverIcon.GetComponent<TokenHoverManager>().UpdateDisplay(token); }
     public void HideHover() { hoverIcon.SetActive(false); }
+    public void SetDeckSize() { startingDeckSize = PlayerDeckManager.instance.ReturnDeckSize(); }
+
+    public void EnableCardPreview(SO_Card givenCard)
+    {
+        cardPreviewObj.SetActive(true);
+        cardPreviewObj.transform.localScale = new Vector3(0, 0, 0);
+        LeanTween.scale(cardPreviewObj, new Vector3(1.5f, 1.5f, 1.5f), 0.25f);
+
+        cardPreviewObj.GetComponent<CardManager>().myCard = givenCard;
+        cardPreviewObj.GetComponent<CardManager>().UpdateValuesFromCardAsset();
+    }
+    public void DisableCardPreview()
+    {
+        cardPreviewObj.SetActive(false);
+    }
 
 }

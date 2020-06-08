@@ -5,11 +5,13 @@ using UnityEngine;
 
 public abstract class SO_Card : ScriptableObject
 {
+    [Space(20)]
+    [Header("Generic Card Data")]
     public string cardName;
     public Color32 cardTint;
     public int cost;
     public Sprite cardImage;
-    public string cardText;
+    [TextArea(5,10)] public string cardText;
     public CardType cardType = CardType.Creature;
 
 }

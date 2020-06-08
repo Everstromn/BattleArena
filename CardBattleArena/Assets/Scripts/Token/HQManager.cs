@@ -32,15 +32,6 @@ public class HQManager : TokenManager
         BattleManager.instance.remainingActions--;
     }
 
-    protected override void OnMouseOver()
-    {
-
-    }
-
-    protected override void OnMouseExit()
-    {
-
-    }
     public override void MoveTokenViaAI(Node givenTargetNode)
     {
         BattleManager.instance.remainingActions--;
