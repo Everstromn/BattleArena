@@ -18,10 +18,18 @@ MonoBehaviour:
     rgba: 3365105698
   cost: 25
   cardImage: {fileID: 21300000, guid: 8b0dc4c7592b16941af536c72dd4dd52, type: 3}
-  cardText: No one knows how long he has been wandering, or what he is looking for!
+  cardText: 'No one knows how long he has been wandering, or what he is looking for!
+
+    Regeneration
+    : 4'
   cardType: 0
   creatureType: 1
   attackRange: 1
-  movement: 2
   damage: 10
   health: 45
+  retaliates: 0
+  retalitionDamage: 0
+  regenerates: 1
+  regenerationAmount: 4
+  movement: 2
+  hasHaste: 0

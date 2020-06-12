@@ -16,9 +16,9 @@ MonoBehaviour:
   cardTint:
     serializedVersion: 2
     rgba: 3363083520
-  cost: 2
+  cost: 12
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Creates creature spawining locations around the spot when placed
   cardType: 2
   attackRange: 0
   damage: 0

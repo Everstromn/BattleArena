@@ -18,7 +18,7 @@ MonoBehaviour:
     rgba: 3365105698
   cost: 5
   cardImage: {fileID: 21300000, guid: 4b06a80a293a95542bfbb81f74aaae5c, type: 3}
-  cardText: 
+  cardText: Haste
   cardType: 0
   creatureType: 1
   attackRange: 1
@@ -26,5 +26,7 @@ MonoBehaviour:
   health: 3
   retaliates: 0
   retalitionDamage: 0
+  regenerates: 0
+  regenerationAmount: 0
   movement: 5
   hasHaste: 1

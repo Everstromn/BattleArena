@@ -23,10 +23,15 @@ MonoBehaviour:
 
     Range : 3
 
-    Damage : 1'
+    Damage : 2'
   cardType: 2
   attackRange: 3
-  damage: 1
+  damage: 2
   health: 80
   impactsGoldPerTurn: 0
   goldPerTurnIncrease: 0
+  canSpawnToken: 0
+  tokenSpawnEveryXTturns: 0
+  tokenToSpawn: {fileID: 0}
+  canChangeNodeType: 0
+  nodeTypeToAdd: 3

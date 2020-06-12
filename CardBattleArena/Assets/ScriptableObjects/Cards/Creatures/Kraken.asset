@@ -18,7 +18,7 @@ MonoBehaviour:
     rgba: 3365105698
   cost: 20
   cardImage: {fileID: 21300000, guid: 635343b53f0193642a95f88692014678, type: 3}
-  cardText: 
+  cardText: 'Retaliation : 4'
   cardType: 0
   creatureType: 0
   attackRange: 3
@@ -26,5 +26,7 @@ MonoBehaviour:
   health: 32
   retaliates: 1
   retalitionDamage: 4
+  regenerates: 0
+  regenerationAmount: 0
   movement: 1
   hasHaste: 0

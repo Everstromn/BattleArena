@@ -18,7 +18,9 @@ MonoBehaviour:
     rgba: 3365105698
   cost: 6
   cardImage: {fileID: 21300000, guid: b957a56466db4ca4585d8d801aec6333, type: 3}
-  cardText: No Additional Actions
+  cardText: 'Haste
+
+    Retaliation : 2'
   cardType: 0
   creatureType: 0
   attackRange: 1

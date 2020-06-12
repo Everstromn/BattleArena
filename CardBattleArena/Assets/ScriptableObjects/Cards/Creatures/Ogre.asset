@@ -18,7 +18,10 @@ MonoBehaviour:
     rgba: 3365105698
   cost: 4
   cardImage: {fileID: 21300000, guid: 1304f1bf450f7944fa8ed1071ee257bf, type: 3}
-  cardText: Avoid him if you can, but really avoid the club!
+  cardText: 'Avoid him if you can, but really avoid the club!
+
+    Retaliation :
+    2'
   cardType: 0
   creatureType: 2
   attackRange: 2
@@ -26,5 +29,7 @@ MonoBehaviour:
   health: 12
   retaliates: 1
   retalitionDamage: 2
+  regenerates: 0
+  regenerationAmount: 0
   movement: 1
   hasHaste: 0
