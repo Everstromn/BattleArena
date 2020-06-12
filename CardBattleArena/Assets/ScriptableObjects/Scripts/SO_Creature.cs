@@ -5,14 +5,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Creature", menuName = "Cards/Creature")]
 public class SO_Creature : SO_Card
 {
-    [Space(20)]
-    [Header("Creature Card Combat Info")]
-
     public CreatureType creatureType;
 
+    [Space(20)]
+    [Header("Creature Card Attack Info")]
     public int attackRange;
-    public int movement;
     public int damage;
+
+    [Space(20)]
+    [Header("Creature Defence Settings")]
     public int health;
+    public bool retaliates = false;
+    public int retalitionDamage = 0;
+    public bool regenerates = false;
+    public int regenerationAmount = 0;
+
+    [Space(20)]
+    [Header("Creature Movement Settings")]
+    public int movement;
+    public bool hasHaste = false;
 
 }

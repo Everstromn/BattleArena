@@ -10,6 +10,15 @@ public class MainMenuUIScript : MonoBehaviour
 {
 
     [SerializeField] private SO_Card[] cardFadingCards = null;
+    [SerializeField] private GameObject sessionManager;
+
+    private void Start()
+    {
+        if(!FindObjectOfType<BattleManager>())
+        {
+            Instantiate(sessionManager);
+        }
+    }
 
     public SO_Card ReturnRandomCard()
     {

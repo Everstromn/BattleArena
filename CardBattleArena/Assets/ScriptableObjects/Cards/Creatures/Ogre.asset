@@ -15,14 +15,16 @@ MonoBehaviour:
   cardName: Giant Ogre
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
+    rgba: 3365105698
   cost: 4
   cardImage: {fileID: 21300000, guid: 1304f1bf450f7944fa8ed1071ee257bf, type: 3}
   cardText: Avoid him if you can, but really avoid the club!
   cardType: 0
   creatureType: 2
-  attackPattern: {fileID: 0}
   attackRange: 2
-  movement: 1
   damage: 3
   health: 12
+  retaliates: 1
+  retalitionDamage: 2
+  movement: 1
+  hasHaste: 0

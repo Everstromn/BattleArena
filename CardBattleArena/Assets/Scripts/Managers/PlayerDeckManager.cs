@@ -26,7 +26,7 @@ public class PlayerDeckManager : MonoBehaviour
         instance = this;
     }
 
-
+    public SO_Deck assignedDeck;
     [SerializeField] private List<SO_Card> playerDeck = new List<SO_Card>();
     public List<SO_Card> playerHand = new List<SO_Card>();
 
@@ -52,14 +52,22 @@ public class PlayerDeckManager : MonoBehaviour
 
     public void ShufflePlayerDeck()
     {
-        Debug.Log("Shuffling Deck");
-
         for (int i = 0; i < playerDeck.Count; i++)
         {
             SO_Card temp = playerDeck[i];
             int randomIndex = Random.Range(i, playerDeck.Count);
             playerDeck[i] = playerDeck[randomIndex];
             playerDeck[randomIndex] = temp;
+        }
+    }
+
+    public void RefreshDeck()
+    {
+        playerDeck.Clear();
+
+        foreach (SO_Card card in assignedDeck.deck)
+        {
+            playerDeck.Add(card);
         }
     }
 

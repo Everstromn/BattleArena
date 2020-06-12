@@ -383,6 +383,7 @@ MonoBehaviour:
     type: 2}
   redTeamBuilding: {fileID: 2100000, guid: 9e19f31422454ec4db516c5ef3195318, type: 2}
   actionPuck: {fileID: 1238742315712021564}
+  prefabCreatureToken: {fileID: 2189544016197522705}
   seekerNode: {fileID: 0}
   targetNode: {fileID: 0}
   movementPreview: 0

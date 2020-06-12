@@ -16,4 +16,12 @@ public class SO_Building : SO_Card
     public bool impactsGoldPerTurn = false;
     public int goldPerTurnIncrease = 0;
 
+    [Space(20)]
+    [Header("Unique Building Mechanics")]
+    public bool canSpawnToken = false;
+    public int tokenSpawnEveryXTturns = 0;
+    public SO_Creature tokenToSpawn;
+    [Space(10)]
+    public bool canChangeNodeType = false;
+    public CardType nodeTypeToAdd = CardType.Nuetral;
 }

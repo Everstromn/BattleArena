@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Basic Wall
   cardTint:
     serializedVersion: 2
-    rgba: 1685359649
+    rgba: 3363083520
   cost: 7
   cardImage: {fileID: 21300000, guid: 50e975a19ba396a499f6a541ece94491, type: 3}
   cardText: A Basic wall, which is normally easier to go round rather than through!

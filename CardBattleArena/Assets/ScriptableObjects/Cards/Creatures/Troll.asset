@@ -15,13 +15,13 @@ MonoBehaviour:
   cardName: Forest Troll
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
+    rgba: 3365105698
   cost: 2
   cardImage: {fileID: 21300000, guid: 7e437a69cef83c3498f7c52cd1589920, type: 3}
   cardText: 
   cardType: 0
   creatureType: 1
   attackRange: 1
-  movement: 3
+  movement: 1
   damage: 3
   health: 9

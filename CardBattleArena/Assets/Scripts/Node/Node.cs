@@ -24,7 +24,13 @@ public class Node : MonoBehaviour
 
     public int pathfinderDistanceToNode;
 
-    private void Awake() { baseMaterial = GetComponent<MeshRenderer>().material; }
+    private void Start()
+    {
+        UpdateMaterial(tileTeam, tileType, walkable);
+        canMoveMaterial = MaterialsManager.instance.nodeWalkNow;
+        canMoveLaterMaterial = MaterialsManager.instance.nodeWalkLater;
+        GetComponent<MeshRenderer>().material = baseMaterial;
+    }
 
     private bool CheckForOccupied()
     {
@@ -45,9 +51,29 @@ public class Node : MonoBehaviour
     public void HighlightMoveLater() { GetComponent<MeshRenderer>().material = canMoveLaterMaterial; }
     public void RemoveHighlight() { GetComponent<MeshRenderer>().material = baseMaterial; }
 
-    private void Update()
+    public void UpdateMaterial(Team myNodesTeam, CardType cardType, bool walkable)
     {
-        
+        if (walkable)
+        {
+            if (myNodesTeam == Team.Blue)
+            {
+                if (cardType == CardType.Creature) { baseMaterial = MaterialsManager.instance.nodeBlueCreature; }
+                if (cardType == CardType.Building) { baseMaterial = MaterialsManager.instance.nodeBlueBuilding; }
+            }
+            else if (myNodesTeam == Team.Red)
+            {
+                if (cardType == CardType.Creature) { baseMaterial = MaterialsManager.instance.nodeRedCreature; }
+                if (cardType == CardType.Building) { baseMaterial = MaterialsManager.instance.nodeRedBuilding; }
+            }
+            else if (myNodesTeam == Team.None)
+            { baseMaterial = MaterialsManager.instance.nodeBasic; }
+        }
+        else
+        {
+            baseMaterial = MaterialsManager.instance.nodeUnwalkable;
+        }
+
+        GetComponent<MeshRenderer>().material = baseMaterial;
     }
 
 }

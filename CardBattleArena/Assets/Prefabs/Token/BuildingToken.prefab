@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 2189544016197522706}
   - component: {fileID: 2189544016197522707}
   - component: {fileID: 6467597954597820736}
+  - component: {fileID: -1235900311385102093}
   m_Layer: 9
   m_Name: BuildingToken
   m_TagString: Untagged
@@ -294,9 +295,14 @@ MonoBehaviour:
   myTeam: 0
   baseTokenMaterial: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
   blueTeamCreature: {fileID: 2100000, guid: 94872cb9853a0ea4c8de2f806d3100a5, type: 2}
+  blueTeamCreatureAction: {fileID: 0}
   blueTeamBuilding: {fileID: 2100000, guid: 5c70b90169cd7d64ebfc45c91d777ded, type: 2}
   redTeamCreature: {fileID: 2100000, guid: b64d94ba98133094daf0b543d1300962, type: 2}
+  redTeamCreatureAction: {fileID: 0}
   redTeamBuilding: {fileID: 2100000, guid: 9e19f31422454ec4db516c5ef3195318, type: 2}
+  actionPuck: {fileID: 0}
+  prefabCreatureToken: {fileID: 2189544016197522705, guid: 89867e874c745804f8cc01e0014aba8b,
+    type: 3}
   seekerNode: {fileID: 0}
   targetNode: {fileID: 0}
   movementPreview: 0
@@ -365,6 +371,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 1, z: 0.9}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &-1235900311385102093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189544016197522705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18dfe590bb20eb46851eded23495840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7073832695443355241
 GameObject:
   m_ObjectHideFlags: 0

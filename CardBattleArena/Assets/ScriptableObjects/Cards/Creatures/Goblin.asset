@@ -15,15 +15,17 @@ MonoBehaviour:
   cardName: Goblin Scout
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
+    rgba: 3365105698
   cost: 2
   cardImage: {fileID: 21300000, guid: 28ef77a02f5fc134ebdfca7f4de93df8, type: 3}
   cardText: Goblin Scouts are the first to enter the battle... and normally the first
     to leave it as well...
   cardType: 0
   creatureType: 2
-  attackPattern: {fileID: 0}
   attackRange: 1
-  movement: 3
   damage: 1
   health: 3
+  retaliates: 0
+  retalitionDamage: 0
+  movement: 3
+  hasHaste: 1

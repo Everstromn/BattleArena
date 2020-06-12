@@ -37,6 +37,13 @@ public class TokenHoverManager : MonoBehaviour
     [SerializeField] private TMP_Text hq_hoverCurrentHealthText = null;
     [SerializeField] private RectTransform hq_hoverHealthForegroundObj = null;
 
+    private float width;
+
+    private void Start()
+    {
+        width = c_hoverHealthForegroundObj.rect.width;
+    }
+
     public void UpdateDisplay(TokenManager token)
     {
         if (token as HQManager)
@@ -51,7 +58,7 @@ public class TokenHoverManager : MonoBehaviour
             float healthpct = (float)token.currentHealth / token.maxHealth;
 
             hq_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.maxHealth.ToString();
-            hq_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 144), hq_hoverHealthForegroundObj.sizeDelta.y);
+            hq_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 216), hq_hoverHealthForegroundObj.sizeDelta.y);
         }
 
         else if (token.myCard.cardType == CardType.Creature)
@@ -72,7 +79,7 @@ public class TokenHoverManager : MonoBehaviour
             float healthpct = (float)token.currentHealth / token.myCreatureCard.health;
 
             c_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.myCreatureCard.health.ToString();
-            c_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 144), c_hoverHealthForegroundObj.sizeDelta.y);
+            c_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 216), c_hoverHealthForegroundObj.sizeDelta.y);
         }
 
         else if (token.myCard.cardType == CardType.Building)
@@ -88,7 +95,7 @@ public class TokenHoverManager : MonoBehaviour
             float healthpct = (float)token.currentHealth / token.myBuildingCard.health;
 
             b_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.myBuildingCard.health.ToString();
-            b_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 144), b_hoverHealthForegroundObj.sizeDelta.y);
+            b_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 216), b_hoverHealthForegroundObj.sizeDelta.y);
         }
     }
 

@@ -15,14 +15,18 @@ MonoBehaviour:
   cardName: Graveyard Gargoyle
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
-  cost: 5
+    rgba: 3365105698
+  cost: 6
   cardImage: {fileID: 21300000, guid: b957a56466db4ca4585d8d801aec6333, type: 3}
   cardText: No Additional Actions
   cardType: 0
   creatureType: 0
-  attackPattern: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
   attackRange: 1
-  movement: 3
   damage: 3
   health: 8
+  retaliates: 1
+  retalitionDamage: 2
+  regenerates: 0
+  regenerationAmount: 0
+  movement: 3
+  hasHaste: 0

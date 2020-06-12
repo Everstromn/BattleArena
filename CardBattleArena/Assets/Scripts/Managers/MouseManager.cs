@@ -6,42 +6,61 @@ public class MouseManager : MonoBehaviour
 {
     private TokenManager selectedToken;
 
-
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(BattleManager.instance.battleActive)
         {
-            if (selectedToken != null && ReturnTokenUnderMouse() == null)
+            if (Input.GetMouseButtonDown(0))
             {
-                if(ReturnNodeUnderMouse() != null)
+                FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
+
+                if (selectedToken != null && ReturnTokenUnderMouse() == null)
                 {
-                    selectedToken.MoveToken();
-                    selectedToken = null;
+                    if(ReturnNodeUnderMouse() != null)
+                    {
+                        selectedToken.MoveToken();
+                        selectedToken.actionPuck.GetComponent<MeshRenderer>().material.color = Color.grey;
+                        selectedToken = null;
+                    }
+                    else
+                    {
+                        selectedToken.movementPreview = false;
+                        selectedToken.ClearPathHighlights();
+                        selectedToken.actionPuck.GetComponent<MeshRenderer>().material.color = Color.grey;
+                        selectedToken = null;
+                    }
+
                 }
-                else
+
+                if (selectedToken == null && ReturnTokenUnderMouse() != null && BattleManager.instance.currentTeamTurn == BattleManager.instance.playerTeam)
+                {
+                    selectedToken = ReturnTokenUnderMouse();
+                    selectedToken.movementPreview = true;
+                }
+            }
+
+            else if(Input.GetMouseButtonDown(1))
+            {
+                if (selectedToken != null)
                 {
                     selectedToken.movementPreview = false;
                     selectedToken.ClearPathHighlights();
+                    selectedToken.actionPuck.GetComponent<MeshRenderer>().material.color = Color.grey;
                     selectedToken = null;
-                    
                 }
 
+                FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
             }
 
-            if (selectedToken == null && ReturnTokenUnderMouse() != null) { selectedToken = ReturnTokenUnderMouse(); selectedToken.movementPreview = true; }
-            }
-
-        else if(Input.GetMouseButtonDown(1))
-        {
-            if (selectedToken != null)
+            if(selectedToken != null)
             {
-                selectedToken.movementPreview = false;
-                selectedToken.ClearPathHighlights();
-                selectedToken = null;
-                
+                if(!(selectedToken as HQManager))
+                {
+                    selectedToken.actionPuck.GetComponent<MeshRenderer>().material.color = Color.blue;
+                }
             }
-        }
 
+        }
     }
 
     private TokenManager ReturnTokenUnderMouse()

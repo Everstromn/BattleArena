@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 52debbc6103ce2b4d80105b0b3b4eba9
   - enabled: 1
+    path: Assets/Scenes/BattleSelectScreen.unity
+    guid: 18b97910efbb79c40abcf864666fc5b7
+  - enabled: 1
     path: Assets/Scenes/BattleArena02.unity
     guid: b4289a123ecb4c04bbf8f0bd4f6250d4
+  - enabled: 1
+    path: Assets/Scenes/BattleArena03.unity
+    guid: 33bd765f77060f54ab312c94e873420b
+  - enabled: 1
+    path: Assets/Scenes/BattleArena04.unity
+    guid: 6ce4a93278455cf4db92a711e9684928
   m_configObjects: {}

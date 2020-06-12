@@ -62,11 +62,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BattleEndUI.cs" />
+    <Compile Include="Assets\BattleSelectScreenUI.cs" />
     <Compile Include="Assets\CardFadingScript.cs" />
+    <Compile Include="Assets\EnemyDisplayPrefabScript.cs" />
+    <Compile Include="Assets\LevelDisplayPrefabScript.cs" />
     <Compile Include="Assets\MainMenuUIScript.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Building.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Card.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Creature.cs" />
+    <Compile Include="Assets\ScriptableObjects\Scripts\SO_Deck.cs" />
+    <Compile Include="Assets\ScriptableObjects\Scripts\SO_EnemyWaves.cs" />
+    <Compile Include="Assets\ScriptableObjects\Scripts\SO_Level.cs" />
+    <Compile Include="Assets\ScriptableObjects\Scripts\SO_Wave.cs" />
     <Compile Include="Assets\Scripts\BattleArenaUI\BattleArenaUIManager.cs" />
     <Compile Include="Assets\Scripts\BattleArenaUI\PhaseTrackingButton.cs" />
     <Compile Include="Assets\Scripts\BattleArenaUI\TokenHoverManager.cs" />
@@ -74,8 +82,10 @@
     <Compile Include="Assets\Scripts\CardUI\CardManager.cs" />
     <Compile Include="Assets\Scripts\Managers\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CurrencyManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\MaterialsManager.cs" />
     <Compile Include="Assets\Scripts\Managers\MouseManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerDeckManager.cs" />
+    <Compile Include="Assets\Scripts\MenuUI\DeckDisplayPrefabScript.cs" />
     <Compile Include="Assets\Scripts\Node\Node.cs" />
     <Compile Include="Assets\Scripts\Node\NodeGrid.cs" />
     <Compile Include="Assets\Scripts\Token\ArenaGrid.cs" />

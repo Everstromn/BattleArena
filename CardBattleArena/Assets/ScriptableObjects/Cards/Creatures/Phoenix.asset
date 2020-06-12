@@ -15,14 +15,16 @@ MonoBehaviour:
   cardName: Rising Phoenix
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
+    rgba: 3365105698
   cost: 12
   cardImage: {fileID: 21300000, guid: 5730ff30e77d4474a96d9caf6dcc2424, type: 3}
   cardText: 
   cardType: 0
   creatureType: 3
-  attackPattern: {fileID: 0}
   attackRange: 2
-  movement: 5
   damage: 5
   health: 10
+  retaliates: 1
+  retalitionDamage: 3
+  movement: 5
+  hasHaste: 0

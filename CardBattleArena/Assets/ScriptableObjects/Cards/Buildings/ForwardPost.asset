@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeaa7f44ee2c94246aebf1a4b1de13a4, type: 3}
+  m_Name: ForwardPost
+  m_EditorClassIdentifier: 
+  cardName: Forward Defence Post
+  cardTint:
+    serializedVersion: 2
+    rgba: 3363083520
+  cost: 2
+  cardImage: {fileID: 0}
+  cardText: 
+  cardType: 2
+  attackRange: 0
+  damage: 0
+  health: 20
+  impactsGoldPerTurn: 0
+  goldPerTurnIncrease: 0
+  canSpawnToken: 0
+  tokenSpawnEveryXTturns: 0
+  tokenToSpawn: {fileID: 0}
+  canChangeNodeType: 1
+  nodeTypeToAdd: 0

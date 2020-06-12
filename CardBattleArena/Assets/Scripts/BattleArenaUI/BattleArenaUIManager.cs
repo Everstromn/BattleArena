@@ -19,6 +19,8 @@ public class BattleArenaUIManager : MonoBehaviour
 
     [SerializeField] private GameObject hoverIcon = null;
 
+    [SerializeField] private GameObject battleEndUI = null;
+
     [SerializeField] private Button proceedButton = null;
 
     [SerializeField] private CinemachineVirtualCamera cameraPos01 = null;
@@ -26,9 +28,23 @@ public class BattleArenaUIManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera cameraPos03 = null;
     [SerializeField] private CinemachineVirtualCamera cameraPos04 = null;
 
+    [SerializeField] private GameObject arena = null;
+    [SerializeField] private Node playerHQNode = null;
+    [SerializeField] private Node AIHQNode = null;
+
     private int startingDeckSize = 0;
 
     private int cameraCurrentPos = 1;
+
+    private void Start()
+    {
+        UpdateGoldDisplay();
+        SetDeckSize();
+        StartCoroutine(BattleManager.instance.BattleInitiationDelay());
+        BattleManager.instance.Arena = arena;
+        BattleManager.instance.playerHQNode = playerHQNode;
+        BattleManager.instance.AIHQNode = AIHQNode;
+    }
 
     public void RotateCameraPos(int val)
     { 
@@ -89,8 +105,11 @@ public class BattleArenaUIManager : MonoBehaviour
 
     public void UpdateGoldDisplay()
     {
+        int turnGold = CurrencyManager.instance.goldPerTurnAddition + CurrencyManager.instance.goldPerTurnBase;
+        string sign;
+        if(turnGold > 0) { sign = "+"; } else { sign = "-"; }
         currentGoldDispalyTextObj.text = CurrencyManager.instance.ReturnGold().ToString();
-        turnGoldDispalyTextObj.text = (CurrencyManager.instance.goldPerTurnAddition + CurrencyManager.instance.goldPerTurnBase).ToString();
+        turnGoldDispalyTextObj.text = "( " + sign + turnGold.ToString() + " )";
     }
 
     public void UpdateHandDisplay()
@@ -124,9 +143,10 @@ public class BattleArenaUIManager : MonoBehaviour
         cardPreviewObj.GetComponent<CardManager>().myCard = givenCard;
         cardPreviewObj.GetComponent<CardManager>().UpdateValuesFromCardAsset();
     }
-    public void DisableCardPreview()
-    {
-        cardPreviewObj.SetActive(false);
-    }
+    public void DisableCardPreview() { cardPreviewObj.SetActive(false); }
 
+    public void EnableBattleEnd()
+    {
+        battleEndUI.SetActive(true);
+    }
 }

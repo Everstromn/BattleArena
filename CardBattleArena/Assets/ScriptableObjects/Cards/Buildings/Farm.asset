@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Fledging Farm
   cardTint:
     serializedVersion: 2
-    rgba: 1685359649
+    rgba: 3363083520
   cost: 5
   cardImage: {fileID: 21300000, guid: 335f52e6d91f35645b0f06b5a9eeed42, type: 3}
   cardText: 'A basic farm set up by the local peasants, helping to support the troops

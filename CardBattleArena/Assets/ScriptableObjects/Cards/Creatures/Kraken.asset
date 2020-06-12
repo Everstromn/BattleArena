@@ -15,14 +15,16 @@ MonoBehaviour:
   cardName: The Kraken
   cardTint:
     serializedVersion: 2
-    rgba: 1687384098
+    rgba: 3365105698
   cost: 20
   cardImage: {fileID: 21300000, guid: 635343b53f0193642a95f88692014678, type: 3}
   cardText: 
   cardType: 0
   creatureType: 0
-  attackPattern: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   attackRange: 3
-  movement: 1
   damage: 8
   health: 32
+  retaliates: 1
+  retalitionDamage: 4
+  movement: 1
+  hasHaste: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Archery Tower
   cardTint:
     serializedVersion: 2
-    rgba: 1685359649
+    rgba: 3363083520
   cost: 12
   cardImage: {fileID: 21300000, guid: 023d9926239264d45bac242a8eadb29c, type: 3}
   cardText: 'A basic tower that can attack enemies within range for a small amount

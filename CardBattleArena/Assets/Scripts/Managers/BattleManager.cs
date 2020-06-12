@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 
 public class BattleManager : MonoBehaviour
@@ -34,6 +34,8 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabCreatureToken;
     public GameObject prefabBuildingToken;
 
+    public SO_Level battleLevel;
+
     public GameObject prefabCreatureTokenPreview;
     public GameObject prefabBuildingTokenPreview;
 
@@ -49,6 +51,7 @@ public class BattleManager : MonoBehaviour
     public Color otherTeamColor = Color.red;
 
     public Node playerHQNode;
+    public Node AIHQNode;
 
     public int playerStartingHealth;
     public int cardsPerDraw = 2;
@@ -57,23 +60,28 @@ public class BattleManager : MonoBehaviour
     public int remainingActions = 0;
     public int turnCounter = 0;
 
-    public int waveOneSpawn = 3;
-    public List<SO_Card> waveOneSpawnTokens = new List<SO_Card>();
+    public SO_EnemyWaves enemyDeck;
 
-    public int waveTwoSpawn = 3;
-    public List<SO_Card> waveTwoSpawnTokens = new List<SO_Card>();
+    private int waveOneSpawn = 3;
+    private List<SO_Card> waveOneSpawnTokens = new List<SO_Card>();
+
+    private int waveTwoSpawn = 3;
+    private List<SO_Card> waveTwoSpawnTokens = new List<SO_Card>();
+
+    private int waveThreeSpawn = 3;
+    private List<SO_Card> waveThreeSpawnTokens = new List<SO_Card>();
+
+    private int recurringWaveSpawn = 3;
+    private List<SO_Card> recurringWaveSpawnTokens = new List<SO_Card>();
 
     public float minPhaseTime = 0.5f;
 
     private void Start()
     {
-        FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
-        FindObjectOfType<BattleArenaUIManager>().SetDeckSize();
         battleActive = false;
-        StartCoroutine(BattleInitiationDelay());
     }
 
-    private IEnumerator BattleInitiationDelay()
+    public IEnumerator BattleInitiationDelay()
     {
         yield return new WaitForSeconds(battleStartDelay);
         battleActive = true;
@@ -201,6 +209,17 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(MinDelayPhase());
         currentPhase = BattlePhase.Completion;
 
+        TokenManager[] activeTokens = FindObjectsOfType<TokenManager>();
+        foreach (TokenManager token in activeTokens)
+        {
+
+            if (token.myTeam == currentTeamTurn)
+            {
+                remainingActions++;
+                token.CompletionPhase();
+            }
+        }
+
         remainingActions--;
     }
 
@@ -234,10 +253,17 @@ public class BattleManager : MonoBehaviour
     {
         if (turnCounter == waveOneSpawn) { AISpawnWavesTokens(waveOneSpawnTokens); }
         if (turnCounter == waveTwoSpawn) { AISpawnWavesTokens(waveTwoSpawnTokens); }
+        if (turnCounter == waveThreeSpawn) { AISpawnWavesTokens(waveThreeSpawnTokens); }
+
+        if (turnCounter > waveThreeSpawn)
+        {
+            int var = turnCounter - waveThreeSpawn;
+            if(var % recurringWaveSpawn == 0) { AISpawnWavesTokens(recurringWaveSpawnTokens); }
+
+        }
 
         TokenManager[] activeTokens = FindObjectsOfType<TokenManager>();
         float currentDelay = 0;
-
         foreach (TokenManager token in activeTokens)
         {
 
@@ -253,7 +279,7 @@ public class BattleManager : MonoBehaviour
     private IEnumerator AIStartTokenMovementAfterDelay(float delayTime, Node targetNode, TokenManager token)
     {
         yield return new WaitForSeconds(delayTime);
-        token.MoveTokenViaAI(targetNode);
+        if (battleActive) { token.MoveTokenViaAI(targetNode); }
     }
 
     private void AISpawnWavesTokens(List<SO_Card> toSpawn)
@@ -285,5 +311,28 @@ public class BattleManager : MonoBehaviour
         GameObject newToken = Instantiate(prefabCreatureToken, spawnPos, Quaternion.identity);
         newToken.transform.SetParent(GameObject.Find("RedTokens").transform);
         newToken.GetComponent<TokenManager>().OnSpawn(spawnCard, Team.Red);
+    }
+
+    public void UpdateAIWaves()
+    {
+        waveOneSpawn = 0;
+        waveOneSpawnTokens.Clear();
+        waveOneSpawn = enemyDeck.enemyWaves[0].spawnWave;
+        waveOneSpawnTokens.AddRange(enemyDeck.enemyWaves[0].spawnCreatures);
+
+        waveTwoSpawn = 0;
+        waveTwoSpawnTokens.Clear();
+        waveTwoSpawn = enemyDeck.enemyWaves[1].spawnWave;
+        waveTwoSpawnTokens.AddRange(enemyDeck.enemyWaves[1].spawnCreatures);
+
+        waveThreeSpawn = 0;
+        waveThreeSpawnTokens.Clear();
+        waveThreeSpawn = enemyDeck.enemyWaves[2].spawnWave;
+        waveThreeSpawnTokens.AddRange(enemyDeck.enemyWaves[2].spawnCreatures);
+
+        recurringWaveSpawn = 0;
+        recurringWaveSpawnTokens.Clear();
+        recurringWaveSpawn = enemyDeck.enemyWaves[3].spawnWave;
+        recurringWaveSpawnTokens.AddRange(enemyDeck.enemyWaves[3].spawnCreatures);
     }
 }

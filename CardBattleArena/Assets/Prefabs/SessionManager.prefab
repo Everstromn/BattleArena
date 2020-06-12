@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6256263748439930662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6256263748439930663}
+  - component: {fileID: 6256263748439930660}
+  - component: {fileID: 6256263748439930661}
+  - component: {fileID: 6256263748439930658}
+  - component: {fileID: 6256263748439930659}
+  - component: {fileID: 6951391560703163382}
+  m_Layer: 0
+  m_Name: SessionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6256263748439930663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6256263748439930660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0033a1513b390e40b7c3cc6291001cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleActive: 0
+  battleStartDelay: 5
+  prefabCreatureToken: {fileID: 2189544016197522705, guid: 89867e874c745804f8cc01e0014aba8b,
+    type: 3}
+  prefabBuildingToken: {fileID: 2189544016197522705, guid: d47dd15069b08274e88fa19157c8a3bc,
+    type: 3}
+  battleLevel: {fileID: 0}
+  prefabCreatureTokenPreview: {fileID: 2189544016197522705, guid: 1f116bd9f385f5f41b96b97d511eedf3,
+    type: 3}
+  prefabBuildingTokenPreview: {fileID: 2189544016197522705, guid: 27552b3bbbd291745ba374792a54c4b8,
+    type: 3}
+  Arena: {fileID: 0}
+  currentPhase: 4
+  currentTeamTurn: 1
+  playerTeam: 0
+  playerTeamColor: {r: 0, g: 0, b: 1, a: 1}
+  otherTeam: 1
+  otherTeamColor: {r: 1, g: 0, b: 0, a: 1}
+  playerHQNode: {fileID: 0}
+  AIHQNode: {fileID: 0}
+  playerStartingHealth: 20
+  cardsPerDraw: 2
+  maxHandSize: 5
+  remainingActions: 0
+  turnCounter: 0
+  enemyDeck: {fileID: 0}
+  minPhaseTime: 1
+--- !u!114 &6256263748439930661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c91784b287e53143b90001812abc459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  assignedDeck: {fileID: 0}
+  playerDeck: []
+  playerHand: []
+--- !u!114 &6256263748439930658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b389561742685684594467e8e7420493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldPerTurnBase: 2
+  goldPerTurnAddition: 0
+--- !u!114 &6256263748439930659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadfec150f5749b4393c5d5d33fc74b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6951391560703163382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256263748439930662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1939b191e9d68eb43bb5f15d5324ac2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTokenMaterial: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
+  blueTeamCreature: {fileID: 2100000, guid: 94872cb9853a0ea4c8de2f806d3100a5, type: 2}
+  blueTeamCreatureAction: {fileID: 2100000, guid: 4ed6066a24967cf4f97a810accc47697,
+    type: 2}
+  blueTeamBuilding: {fileID: 2100000, guid: 5c70b90169cd7d64ebfc45c91d777ded, type: 2}
+  redTeamCreature: {fileID: 2100000, guid: b64d94ba98133094daf0b543d1300962, type: 2}
+  redTeamCreatureAction: {fileID: 2100000, guid: 753ccd286a81cfe4f9d2ac875b71c54b,
+    type: 2}
+  redTeamBuilding: {fileID: 2100000, guid: 9e19f31422454ec4db516c5ef3195318, type: 2}
+  nodeBasic: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
+  nodeUnwalkable: {fileID: 2100000, guid: 478de871684af714a8a67750e021e650, type: 2}
+  nodeBlueBuilding: {fileID: 2100000, guid: ddb40384eb104c34b834d5f8087ad2cc, type: 2}
+  nodeBlueCreature: {fileID: 2100000, guid: bed9dac91f226714c94cae973900ff9a, type: 2}
+  nodeRedBuilding: {fileID: 2100000, guid: ad50b9048733aff4d9e3036aa2526b57, type: 2}
+  nodeRedCreature: {fileID: 2100000, guid: b41d85cb35a4a554597023dfa8c9f835, type: 2}
+  nodeWalkNow: {fileID: 2100000, guid: e29ba1b21131dde4ea9b340690dad205, type: 2}
+  nodeWalkLater: {fileID: 2100000, guid: 5bacb43c435cdde4aa9868b62c6660b4, type: 2}
