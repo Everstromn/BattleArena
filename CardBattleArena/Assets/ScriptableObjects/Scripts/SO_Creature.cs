@@ -16,7 +16,7 @@ public class SO_Creature : SO_Card
     [Header("Creature Defence Settings")]
     public int health;
     public bool retaliates = false;
-    public int retalitionDamage = 0;
+    public int retaliationDamage = 0;
     public bool regenerates = false;
     public int regenerationAmount = 0;
 

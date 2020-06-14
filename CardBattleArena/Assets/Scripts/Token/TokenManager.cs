@@ -283,6 +283,7 @@ public class TokenManager : MonoBehaviour
                 else
                 {
                     SpawnTokenFromBuilding();
+                    countToAction = myBuildingCard.tokenSpawnEveryXTturns;
                 }
             }
         }
@@ -304,7 +305,7 @@ public class TokenManager : MonoBehaviour
         BattleManager.instance.remainingActions--;
     }
 
-    public virtual void TakeDamage(int damage, bool retailiate, TokenManager retailiateDamage)
+    public virtual void TakeDamage(int damage, bool retailiate, TokenManager agressor)
     {
         currentHealth = currentHealth - damage;
 
@@ -312,7 +313,7 @@ public class TokenManager : MonoBehaviour
         {
             if (myCard.cardType == CardType.Creature)
             {
-                retailiateDamage.TakeDamage(myCreatureCard.retalitionDamage, false, this);
+                agressor.TakeDamage(myCreatureCard.retaliationDamage, false, this);
             }
         }
 

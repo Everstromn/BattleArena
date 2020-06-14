@@ -31,7 +31,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text c_cardHealthTextObj = null;
 
     [Space(20)]
-    [Header("Creature Card Object References")]
+    [Header("Building Card Object References")]
     [SerializeField] private GameObject buildingCardFront = null;
     [SerializeField] private TMP_Text b_cardNameTextObj = null;
     [SerializeField] private Image b_cardTitleTintImageObj = null;
