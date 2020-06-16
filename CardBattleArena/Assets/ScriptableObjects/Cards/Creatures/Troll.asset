@@ -22,6 +22,11 @@ MonoBehaviour:
   cardType: 0
   creatureType: 1
   attackRange: 1
-  movement: 1
   damage: 3
   health: 9
+  retaliates: 0
+  retaliationDamage: 0
+  regenerates: 0
+  regenerationAmount: 0
+  movement: 2
+  hasHaste: 0

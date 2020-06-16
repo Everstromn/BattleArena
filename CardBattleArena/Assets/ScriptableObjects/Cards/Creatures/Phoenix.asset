@@ -25,8 +25,8 @@ MonoBehaviour:
   damage: 5
   health: 10
   retaliates: 1
-  retalitionDamage: 3
+  retaliationDamage: 0
   regenerates: 0
   regenerationAmount: 0
-  movement: 5
+  movement: 6
   hasHaste: 0

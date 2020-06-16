@@ -132,8 +132,12 @@ public class BattleManager : MonoBehaviour
         if (currentTeamTurn == playerTeam)
         {
             turnCounter++;
-            CurrencyManager.instance.IncreaseGoldPerTurn(1);
             CurrencyManager.instance.AddTurnGold();
+            // increase gold income by 1 every 3rd turn
+            if (turnCounter % 3 == 0)
+            {
+                CurrencyManager.instance.IncreaseGoldPerTurn(1);
+            }
             FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
         }
         

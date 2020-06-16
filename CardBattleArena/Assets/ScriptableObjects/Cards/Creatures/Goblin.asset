@@ -28,8 +28,8 @@ MonoBehaviour:
   damage: 1
   health: 3
   retaliates: 0
-  retalitionDamage: 0
+  retaliationDamage: 0
   regenerates: 0
   regenerationAmount: 0
-  movement: 3
+  movement: 4
   hasHaste: 1

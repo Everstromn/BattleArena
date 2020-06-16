@@ -30,5 +30,5 @@ MonoBehaviour:
   retaliationDamage: 0
   regenerates: 0
   regenerationAmount: 0
-  movement: 3
+  movement: 4
   hasHaste: 1
