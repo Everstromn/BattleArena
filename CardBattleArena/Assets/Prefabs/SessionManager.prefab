@@ -58,6 +58,8 @@ MonoBehaviour:
     type: 3}
   prefabBuildingTokenPreview: {fileID: 2189544016197522705, guid: 27552b3bbbd291745ba374792a54c4b8,
     type: 3}
+  prefabSpellTokenPreview: {fileID: 2189544016197522705, guid: 198062e1cbdf4724882e7aa3de852665,
+    type: 3}
   Arena: {fileID: 0}
   currentPhase: 4
   currentTeamTurn: 1

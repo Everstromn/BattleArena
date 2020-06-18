@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum CardType { Creature, Spell, Building, Nuetral}
 public enum CreatureType { Undead, ForestKin, Greenskin, Elemental}
+public enum SpellType { Damage, Spawn, Buff}
 
 public enum Team { Blue, Red, None}
 
