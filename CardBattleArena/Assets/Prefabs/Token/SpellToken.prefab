@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2189544016197522705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2189544016197522717}
+  - component: {fileID: 6111458795259792114}
+  - component: {fileID: 2113137218508558790}
+  m_Layer: 9
+  m_Name: SpellToken
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2189544016197522717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189544016197522705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.51217, z: 0}
+  m_LocalScale: {x: 1, y: 0.0286925, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6111458795259792114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189544016197522705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d94c5ca423fed5841b636b6a25f8e109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTokenImageObj: {fileID: 0}
+  myTokensImage: {fileID: 0}
+  myCard: {fileID: 0}
+  myCreatureCard: {fileID: 0}
+  myBuildingCard: {fileID: 0}
+  myTeam: 0
+  baseTokenMaterial: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
+  blueTeamCreature: {fileID: 2100000, guid: 94872cb9853a0ea4c8de2f806d3100a5, type: 2}
+  blueTeamCreatureAction: {fileID: 2100000, guid: 4ed6066a24967cf4f97a810accc47697,
+    type: 2}
+  blueTeamBuilding: {fileID: 2100000, guid: 5c70b90169cd7d64ebfc45c91d777ded, type: 2}
+  redTeamCreature: {fileID: 2100000, guid: b64d94ba98133094daf0b543d1300962, type: 2}
+  redTeamCreatureAction: {fileID: 2100000, guid: 753ccd286a81cfe4f9d2ac875b71c54b,
+    type: 2}
+  redTeamBuilding: {fileID: 2100000, guid: 9e19f31422454ec4db516c5ef3195318, type: 2}
+  actionPuck: {fileID: 0}
+  prefabCreatureToken: {fileID: 2189544016197522705}
+  seekerNode: {fileID: 0}
+  targetNode: {fileID: 0}
+  movementPreview: 0
+  clicks: 0
+  maxHealth: 0
+  currentHealth: 1
+  damageDispalyObj: {fileID: 0}
+  damageDisplayTextObj: {fileID: 0}
+--- !u!114 &2113137218508558790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189544016197522705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18dfe590bb20eb46851eded23495840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -38,6 +38,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject prefabCreatureTokenPreview;
     public GameObject prefabBuildingTokenPreview;
+    public GameObject prefabSpellTokenPreview;
 
     private GameObject newToken;
 
@@ -234,6 +235,7 @@ public class BattleManager : MonoBehaviour
 
         if (givenCard.cardType == CardType.Creature) { newToken = Instantiate(prefabCreatureTokenPreview, Arena.transform); }
         if (givenCard.cardType == CardType.Building) { newToken = Instantiate(prefabBuildingTokenPreview, Arena.transform); }
+        if (givenCard.cardType == CardType.Spell) { newToken = Instantiate(prefabSpellTokenPreview, Arena.transform); }
 
         newToken.GetComponent<PreviewTokenManager>().OnSpawn(givenCard);
     }

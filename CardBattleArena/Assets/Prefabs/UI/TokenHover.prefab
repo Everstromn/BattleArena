@@ -1488,7 +1488,7 @@ MonoBehaviour:
   c_hoverRangeText: {fileID: 1134513214838793225}
   c_hoverMovementText: {fileID: 1134513215618475891}
   c_hoverDamageText: {fileID: 1134513216445212303}
-  c_hoverMaxHealthText: {fileID: 1134513216310154310}
+  c_hovertotalHealthText: {fileID: 1134513216310154310}
   c_hoverCurrentHealthText: {fileID: 1134513215360976567}
   c_hoverHealthForegroundObj: {fileID: 1134513215659781952}
   buildingHoverObj: {fileID: 8309127614594777074}

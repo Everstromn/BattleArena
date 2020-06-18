@@ -94,4 +94,29 @@ public class ArenaGrid : MonoBehaviour
 
     }
 
+    public List<Node> GetNeighboursInRangeVariableSize(Node node, int rangeXMin, int rangeXMax, int rangeYMin, int rangeYMax)
+    {
+        List<Node> neighbours = new List<Node>();
+
+        for (int x = rangeXMin; x <= rangeXMax; x++)
+        {
+            for (int y = rangeYMin; y <= rangeYMax; y++)
+            {
+                if (x == 0 && y == 0) { continue; }
+
+
+                int checkX = node.xRow + x;
+                int checkY = node.yRow + y;
+
+                if (checkX >= 0 && checkX <= maxX && checkY >= 0 && checkY <= maxY)
+                {
+                    neighbours.Add(grid[checkX, checkY]);
+                }
+
+            }
+        }
+
+        return neighbours;
+    }
+
 }

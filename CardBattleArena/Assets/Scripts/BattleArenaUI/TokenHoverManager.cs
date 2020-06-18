@@ -16,7 +16,7 @@ public class TokenHoverManager : MonoBehaviour
     [SerializeField] private TMP_Text       c_hoverRangeText= null;
     [SerializeField] private TMP_Text       c_hoverMovementText= null;
     [SerializeField] private TMP_Text       c_hoverDamageText= null;
-    [SerializeField] private TMP_Text       c_hoverMaxHealthText= null;
+    [SerializeField] private TMP_Text       c_hovertotalHealthText= null;
     [SerializeField] private TMP_Text       c_hoverCurrentHealthText= null;
     [SerializeField] private RectTransform  c_hoverHealthForegroundObj = null;
 
@@ -55,9 +55,9 @@ public class TokenHoverManager : MonoBehaviour
             //hq_hoverImage.sprite = token.myCard.cardImage;
             hq_hoverTitle.text = token.myTeam.ToString() + " Teams HQ";
 
-            float healthpct = (float)token.currentHealth / token.maxHealth;
+            float healthpct = (float)token.currentHealth / token.totalHealth;
 
-            hq_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.maxHealth.ToString();
+            hq_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.totalHealth.ToString();
             hq_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 216), hq_hoverHealthForegroundObj.sizeDelta.y);
         }
 
@@ -71,14 +71,14 @@ public class TokenHoverManager : MonoBehaviour
             c_hoverTitle.text = token.myCard.cardName;
             c_hoverDesc.text = token.myCard.cardText;
             
-            c_hoverRangeText.text = token.myCreatureCard.attackRange.ToString();
-            c_hoverMovementText.text = token.myCreatureCard.movement.ToString();
-            c_hoverDamageText.text = token.myCreatureCard.damage.ToString();
-            c_hoverMaxHealthText.text = token.myCreatureCard.health.ToString();
+            c_hoverRangeText.text = token.totalRange.ToString();
+            c_hoverMovementText.text = token.totalMovement.ToString();
+            c_hoverDamageText.text = token.totalDamage.ToString();
+            c_hovertotalHealthText.text = token.totalHealth.ToString();
 
-            float healthpct = (float)token.currentHealth / token.myCreatureCard.health;
+            float healthpct = (float)token.currentHealth / token.totalHealth;
 
-            c_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.myCreatureCard.health.ToString();
+            c_hoverCurrentHealthText.text = token.currentHealth.ToString() + " / " + token.totalHealth.ToString();
             c_hoverHealthForegroundObj.sizeDelta = new Vector2((healthpct * 216), c_hoverHealthForegroundObj.sizeDelta.y);
         }
 

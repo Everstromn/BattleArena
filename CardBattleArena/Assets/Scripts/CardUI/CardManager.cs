@@ -40,9 +40,20 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text b_cardDescTextObj = null;
     [SerializeField] private Image b_cardDescTintImageObj = null;
 
+    [Space(20)]
+    [Header("Spell Card Object References")]
+    [SerializeField] private GameObject spellCardFront = null;
+    [SerializeField] private TMP_Text s_cardNameTextObj = null;
+    [SerializeField] private Image s_cardTitleTintImageObj = null;
+    [SerializeField] private TMP_Text s_cardCostTextObj = null;
+    [SerializeField] private Image s_cardImageObj = null;
+    [SerializeField] private TMP_Text s_cardDescTextObj = null;
+    [SerializeField] private Image s_cardDescTintImageObj = null;
+
     [HideInInspector] public SO_Card myCard;
     private SO_Creature myCreatureCard;
     private SO_Building myBuildingCard;
+    private SO_Spell mySpellCard;
 
     private bool canBePlayedNow = false;
     public bool CanBePlayedNow
@@ -70,6 +81,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 myCreatureCard = myCard as SO_Creature;
                 buildingCardFront.SetActive(false);
                 creatureCardFront.SetActive(true);
+                spellCardFront.SetActive(false);
 
                 c_cardNameTextObj.text = myCard.cardName;
                 c_cardTitleTintImageObj.color = myCard.cardTint;
@@ -89,6 +101,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 myBuildingCard = myCard as SO_Building;
                 buildingCardFront.SetActive(true);
                 creatureCardFront.SetActive(false);
+                spellCardFront.SetActive(false);
 
 
                 b_cardNameTextObj.text = myCard.cardName;
@@ -97,6 +110,22 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 b_cardImageObj.sprite = myCard.cardImage;
                 b_cardDescTextObj.text = myCard.cardText;
                 b_cardDescTintImageObj.color = myCard.cardTint;
+
+            }
+
+            if (myCard.cardType == CardType.Spell)
+            {
+                mySpellCard = myCard as SO_Spell;
+                buildingCardFront.SetActive(false);
+                creatureCardFront.SetActive(false);
+                spellCardFront.SetActive(true);
+
+                s_cardNameTextObj.text = myCard.cardName;
+                s_cardTitleTintImageObj.color = myCard.cardTint;
+                s_cardCostTextObj.text = myCard.cost.ToString();
+                s_cardImageObj.sprite = myCard.cardImage;
+                s_cardDescTextObj.text = myCard.cardText;
+                s_cardDescTintImageObj.color = myCard.cardTint;
 
             }
         }
