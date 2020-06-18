@@ -622,3 +622,7 @@ E:\Files\GitHub\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.csproj.Cor
 E:\Files\GitHub\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 E:\Files\GitHub\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.dll
 E:\Files\GitHub\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.pdb
+E:\GameDevstuff\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+E:\GameDevstuff\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+E:\GameDevstuff\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.dll
+E:\GameDevstuff\BattleArena\CardBattleArena\obj\Debug\Assembly-CSharp.pdb

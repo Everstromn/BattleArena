@@ -56,6 +56,7 @@ public class BattleManager : MonoBehaviour
     public int playerStartingHealth;
     public int cardsPerDraw = 2;
     public int maxHandSize = 5;
+    public int goldIncomeIncrementEveryXTurns = 3;
 
     public int remainingActions = 0;
     public int turnCounter = 0;
@@ -134,7 +135,7 @@ public class BattleManager : MonoBehaviour
             turnCounter++;
             CurrencyManager.instance.AddTurnGold();
             // increase gold income by 1 every 3rd turn
-            if (turnCounter % 3 == 0)
+            if (turnCounter % goldIncomeIncrementEveryXTurns == 0)
             {
                 CurrencyManager.instance.IncreaseGoldPerTurn(1);
             }

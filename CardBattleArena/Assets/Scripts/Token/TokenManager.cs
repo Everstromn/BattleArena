@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems; //added for rightclick preview pucks, using IPointerClickHandler
 
-public class TokenManager : MonoBehaviour
+public class TokenManager : MonoBehaviour, IPointerClickHandler
 {
+    public bool preview = false; // for rightclick preview
+
+
     public SpriteRenderer myTokenImageObj;
 
     [SerializeField] protected Sprite myTokensImage;
@@ -117,6 +121,22 @@ public class TokenManager : MonoBehaviour
                 }
             }
 
+        }
+    }
+    // preview when rightclicking puck
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log("detectedclick");
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (!preview)
+            {
+                FindObjectOfType<BattleArenaUIManager>().EnableCardPreview(myCard);
+            }
+            else
+            {
+                FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
+            }
         }
     }
 
