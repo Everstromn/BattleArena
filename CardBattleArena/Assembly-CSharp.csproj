@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Node\Node.cs" />
     <Compile Include="Assets\Scripts\Node\NodeGrid.cs" />
     <Compile Include="Assets\Scripts\Token\ArenaGrid.cs" />
+    <Compile Include="Assets\Scripts\Token\BuffTracker.cs" />
     <Compile Include="Assets\Scripts\Token\HQManager.cs" />
     <Compile Include="Assets\Scripts\Token\PathFinder.cs" />
     <Compile Include="Assets\Scripts\Token\PreviewTokenManager.cs" />

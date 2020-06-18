@@ -24,8 +24,13 @@ public class SO_Spell : SO_Card
 
     [Space(20)]
     [Header("Buff Spell")]
+    public int buffLength;
     public int rangeBuff;
     public int movementBuff;
     public int attackBuff;
     public int healthBuff;
+
+    [Space(20)]
+    [Header("Resource Spell")]
+    public int goldPerAllyCreature;
 }

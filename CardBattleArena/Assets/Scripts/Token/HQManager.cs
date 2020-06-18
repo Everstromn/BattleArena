@@ -10,6 +10,7 @@ public class HQManager : TokenManager
         PlayerDeckManager.instance.ShufflePlayerDeck();
         maxHealth = BattleManager.instance.playerStartingHealth;
         currentHealth = maxHealth;
+        RecalcBuffs();
     }
 
     protected override void Update()

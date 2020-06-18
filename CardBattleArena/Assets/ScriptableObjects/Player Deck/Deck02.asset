@@ -15,5 +15,5 @@ MonoBehaviour:
   deckName: Advanced Deck
   deck:
   - {fileID: 11400000, guid: 47ed82ee81a95054387f228af7174f76, type: 2}
-  - {fileID: 11400000, guid: a2b843a958092bf468aca102d5446809, type: 2}
-  - {fileID: 11400000, guid: a2b843a958092bf468aca102d5446809, type: 2}
+  - {fileID: 11400000, guid: 47ed82ee81a95054387f228af7174f76, type: 2}
+  - {fileID: 11400000, guid: 886371eff49f21b40b3c295756aed44d, type: 2}

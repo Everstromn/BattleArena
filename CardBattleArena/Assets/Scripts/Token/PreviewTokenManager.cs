@@ -30,9 +30,10 @@ public class PreviewTokenManager : MonoBehaviour
 
     private void Update()
     {
+
         UpdateLocation();
         if(Input.GetMouseButtonDown(0)) { SpawnProperToken(); }
-
+        if(hoveredNode == null) { hoveredNode = BattleManager.instance.playerHQNode; }
         if (myCard.cardType == CardType.Spell)
         {
             RemoveHighlights();
@@ -80,6 +81,9 @@ public class PreviewTokenManager : MonoBehaviour
         newToken.GetComponent<TokenManager>().OnSpawn(myCard, Team.Blue);
         CurrencyManager.instance.AlterGold(-myCard.cost);
         FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
+
+        if (myCard.cardType == CardType.Spell) { RemoveHighlights(); }
+
         Destroy(gameObject);
     }
 
@@ -95,6 +99,7 @@ public class PreviewTokenManager : MonoBehaviour
         ArenaGrid myBattleGrid = FindObjectOfType<ArenaGrid>();
         mySpellCard = myCard as SO_Spell;
         myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(hoveredNode, mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
+        myAffectedArea.Add(hoveredNode);
         foreach (Node node in myAffectedArea) { node.HighlightMoveNow(); }
     }
 }

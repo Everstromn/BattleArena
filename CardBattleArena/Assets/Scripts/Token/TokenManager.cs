@@ -12,6 +12,7 @@ public class TokenManager : MonoBehaviour
     public SO_Card myCard = null;
     public SO_Creature myCreatureCard;
     public SO_Building myBuildingCard;
+    public SO_Spell mySpellCard;
 
     public Team myTeam;
 
@@ -53,6 +54,21 @@ public class TokenManager : MonoBehaviour
 
     [SerializeField] protected GameObject damageDispalyObj = null;
     [SerializeField] protected TMP_Text damageDisplayTextObj = null;
+
+    public int tempRange;
+    public int tempMovement;
+    public int tempDamage;
+    public int tempHealth;
+
+    public List<BuffTracker> rangeBuff = new List<BuffTracker>();
+    public List<BuffTracker> movementBuff = new List<BuffTracker>();
+    public List<BuffTracker> damageBuff = new List<BuffTracker>();
+    public List<BuffTracker> healthBuff = new List<BuffTracker>();
+
+    public int totalRange;
+    public int totalMovement;
+    public int totalDamage;
+    public int totalHealth;
 
     protected bool haveSetUp = false;
 
@@ -118,6 +134,10 @@ public class TokenManager : MonoBehaviour
             }
 
         }
+        if(myCard.cardType == CardType.Spell && mySpellCard != null)
+        {
+            RunSpellFunction();
+        }
     }
 
     public virtual void OnSpawn(SO_Card givenCard, Team givenTeam)
@@ -131,7 +151,8 @@ public class TokenManager : MonoBehaviour
     {
         haveSetUp = true;        
         myTokensImage = myCard.cardImage;
-        myTokenImageObj.sprite = myTokensImage;
+
+        if (myTokenImageObj != null) { myTokenImageObj.sprite = myTokensImage; }
 
         if (myCard.cardType == CardType.Creature)
         {
@@ -152,6 +173,8 @@ public class TokenManager : MonoBehaviour
 
             attackRange = myCreatureCard.attackRange;
             attackDamage = myCreatureCard.damage;
+
+            GetComponent<MeshRenderer>().material = TokenMaterial();
         }
 
         if (myCard.cardType == CardType.Building)
@@ -181,9 +204,17 @@ public class TokenManager : MonoBehaviour
                     node.UpdateMaterial(node.tileTeam, node.tileType, node.walkable);
                 }
             }
+
+            GetComponent<MeshRenderer>().material = TokenMaterial();
+
         }
 
-        GetComponent<MeshRenderer>().material = TokenMaterial();
+        if (myCard.cardType == CardType.Spell)
+        {
+            mySpellCard = myCard as SO_Spell;
+        }
+
+        RecalcBuffs();
 
     }
 
@@ -232,6 +263,11 @@ public class TokenManager : MonoBehaviour
     protected virtual IEnumerator MoveTokenOverTime()
     {
         int usedMovement = 0;
+        int plannedMovement = 0;
+
+        if (myPath.Count > remainingMovement) { plannedMovement = remainingMovement; } else { plannedMovement = myPath.Count; }
+        float delayPerStep = 0.75f / plannedMovement;
+
         for (int i = 0; i < remainingMovement; i++)
         {
 
@@ -240,7 +276,7 @@ public class TokenManager : MonoBehaviour
                 Vector3 tilePosition = new Vector3(myPath[i].transform.position.x, myPath[i].transform.position.y + 0.5f, myPath[i].transform.position.z);
                 transform.position = tilePosition;
                 usedMovement++;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(delayPerStep);
             }
         }
 
@@ -255,7 +291,17 @@ public class TokenManager : MonoBehaviour
 
     public virtual void UpkeepPhase()
     {
-        remainingMovement = maxMovement;
+        if(BattleManager.instance.currentTeamTurn == myTeam)
+        {
+        foreach (BuffTracker buff in rangeBuff.ToArray()) { buff.turnsRemaining --; if (buff.turnsRemaining < 1) { rangeBuff.Remove(buff); } }
+        foreach (BuffTracker buff in movementBuff.ToArray()) {  buff.turnsRemaining--;Debug.Log("Buff in Array : Imapct" + buff.impact + " & Turns remaining : " + buff.turnsRemaining); if (buff.turnsRemaining < 1) { movementBuff.Remove(buff); } }
+        foreach (BuffTracker buff in damageBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { damageBuff.Remove(buff); } }
+        foreach (BuffTracker buff in healthBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { healthBuff.Remove(buff); } }
+        }
+
+        RecalcBuffs();
+        
+        remainingMovement = totalMovement;
     }
 
     public virtual void ActionPhase(float givenDelay)
@@ -263,14 +309,14 @@ public class TokenManager : MonoBehaviour
         actionRemaining = true;
         
         // Search for enemy tokens within X squares
-        List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), attackRange);
+        List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), totalRange);
         List<TokenManager> enemiesInRange = new List<TokenManager>();
         foreach (Node node in nodesInRange) { if(node.occupied) { if (node.ReturnTokenOnNode().myTeam != myTeam) { enemiesInRange.Add(node.ReturnTokenOnNode()); } } }
 
         // Order the enemies based off a value (lowest health first)
         enemiesInRange.Sort(Utils.SortByHealth);
 
-        foreach (TokenManager token in enemiesInRange) { StartCoroutine(DealDamageAfterTime(givenDelay, token)); }
+        foreach (TokenManager token in enemiesInRange) { StartCoroutine(DealDamageAfterTime(totalDamage, givenDelay, token)); }
 
         if (myCard.cardType == CardType.Building)
         {
@@ -291,7 +337,7 @@ public class TokenManager : MonoBehaviour
         BattleManager.instance.remainingActions--;
     }
 
-    protected virtual IEnumerator DealDamageAfterTime(float currentDelay, TokenManager enemyToBeAttacked)
+    protected virtual IEnumerator DealDamageAfterTime(int damage, float currentDelay, TokenManager enemyToBeAttacked)
     {
         BattleManager.instance.remainingActions++;
 
@@ -299,7 +345,7 @@ public class TokenManager : MonoBehaviour
 
         if(enemyToBeAttacked != null)
         {
-            enemyToBeAttacked.TakeDamage(attackDamage, true, this);
+            enemyToBeAttacked.TakeDamage(damage, true, this);
             actionRemaining = false;
         }
         BattleManager.instance.remainingActions--;
@@ -401,7 +447,7 @@ public class TokenManager : MonoBehaviour
 
     protected virtual void GainHealth(int val)
     {
-        currentHealth = Mathf.Clamp(currentHealth + val, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + val, 0, totalHealth);
     }
 
     private void SpawnToken(Node spawnNode, SO_Card spawnCard, Team givenTeam)
@@ -422,5 +468,175 @@ public class TokenManager : MonoBehaviour
         if (myBuildPath.Count > 0) { Debug.Log("Found Path"); } else { Debug.Log("Found No Path"); }
 
         SpawnToken(myBuildPath[0], myBuildingCard.tokenToSpawn, BattleManager.instance.currentTeamTurn);
+    }
+
+    private void RunSpellFunction()
+    {
+        ClearPathHighlights();
+
+        if (mySpellCard.spellType == SpellType.Damage)
+        {
+            //Find nodes in affected area
+            List<Node> myAffectedArea = new List<Node>();
+            ArenaGrid myBattleGrid = FindObjectOfType<ArenaGrid>();
+            mySpellCard = myCard as SO_Spell;
+            myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(ReturnNodeIAmOn(), mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
+            myAffectedArea.Add(ReturnNodeIAmOn());
+
+            //Check for enemies on each node
+            List<TokenManager> enemiesInRange = new List<TokenManager>();
+            foreach (Node node in myAffectedArea)
+            {
+                if (node.occupied)
+                {
+                    if (node.ReturnTokenOnNode().myTeam != myTeam)
+                    {
+                        enemiesInRange.Add(node.ReturnTokenOnNode());
+                    }
+                }
+            }
+
+            //Deal Damage to them
+            foreach (TokenManager token in enemiesInRange)
+            {
+                StartCoroutine(DealDamageAfterTime(mySpellCard.damageAmount, 0, token));
+            }
+        }
+
+        if (mySpellCard.spellType == SpellType.Buff)
+        {
+            //Find nodes in affected area
+            List<Node> myAffectedArea = new List<Node>();
+            ArenaGrid myBattleGrid = FindObjectOfType<ArenaGrid>();
+            mySpellCard = myCard as SO_Spell;
+            myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(ReturnNodeIAmOn(), mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
+            myAffectedArea.Add(ReturnNodeIAmOn());
+
+            //Check for allies on each node
+            List<TokenManager> alliesInRange = new List<TokenManager>();
+            foreach (Node node in myAffectedArea)
+            {
+                if (node.occupied)
+                {
+                    if (node.ReturnTokenOnNode().myTeam == myTeam)
+                    {
+                        alliesInRange.Add(node.ReturnTokenOnNode());
+                    }
+                }
+            }
+
+            foreach (TokenManager ally in alliesInRange)
+            {
+                Debug.Log("Detected Token : " + ally.name);
+
+                if (mySpellCard.rangeBuff != 0) { ally.AddBuff(StatType.Range, mySpellCard.rangeBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Range"); }
+                if (mySpellCard.movementBuff != 0) { ally.AddBuff(StatType.Movement, mySpellCard.movementBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Movement"); }
+                if (mySpellCard.attackBuff != 0) { ally.AddBuff(StatType.Attack, mySpellCard.attackBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Attack"); }
+                if (mySpellCard.healthBuff != 0) { ally.AddBuff(StatType.Health, mySpellCard.healthBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Health"); }
+
+                ally.RecalcBuffs();
+            }
+
+        }
+
+        if (mySpellCard.spellType == SpellType.Debuff)
+        {
+            //Find nodes in affected area
+            List<Node> myAffectedArea = new List<Node>();
+            ArenaGrid myBattleGrid = FindObjectOfType<ArenaGrid>();
+            mySpellCard = myCard as SO_Spell;
+            myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(ReturnNodeIAmOn(), mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
+            myAffectedArea.Add(ReturnNodeIAmOn());
+
+            //Check for enemies on each node
+            List<TokenManager> enemiesInRange = new List<TokenManager>();
+            foreach (Node node in myAffectedArea)
+            {
+                if (node.occupied)
+                {
+                    if (node.ReturnTokenOnNode().myTeam != myTeam)
+                    {
+                        enemiesInRange.Add(node.ReturnTokenOnNode());
+                    }
+                }
+            }
+
+            foreach (TokenManager enemy in enemiesInRange)
+            {
+                if (mySpellCard.rangeBuff != 0) { enemy.AddBuff(StatType.Range, mySpellCard.rangeBuff, mySpellCard.buffLength); Debug.Log("Added DeBuff : Range"); }
+                if (mySpellCard.movementBuff != 0) { enemy.AddBuff(StatType.Movement, mySpellCard.movementBuff, mySpellCard.buffLength); Debug.Log("Added DeBuff : Movement"); }
+                if (mySpellCard.attackBuff != 0) { enemy.AddBuff(StatType.Attack, mySpellCard.attackBuff, mySpellCard.buffLength); Debug.Log("Added DeBuff : Attack"); }
+                if (mySpellCard.healthBuff != 0) { enemy.AddBuff(StatType.Health, mySpellCard.healthBuff, mySpellCard.buffLength); Debug.Log("Added DeBuff : Health"); }
+
+                enemy.RecalcBuffs();
+            }
+
+        }
+
+        if (mySpellCard.spellType == SpellType.Resource)
+        {
+            if (mySpellCard.goldPerAllyCreature > 0)
+            {
+                TokenManager[] activeTokens = FindObjectsOfType<TokenManager>();
+                foreach (TokenManager token in activeTokens)
+                {
+                    if (token.myTeam == myTeam && token.myCreatureCard != null)
+                    {
+                        CurrencyManager.instance.AlterGold(mySpellCard.goldPerAllyCreature);
+                        FindObjectOfType<BattleArenaUIManager>().UpdateGoldDisplay();
+                    }
+                }
+            }
+        }
+
+            Destroy(gameObject);
+
+    }
+
+    public void AddBuff(StatType statToBuff, int valToBuff, int turnsToBuff)
+    {
+        BuffTracker newBuff = new BuffTracker();
+
+        newBuff.turnsRemaining = turnsToBuff;
+        newBuff.impact = valToBuff;
+
+        switch(statToBuff)
+        {
+            case StatType.Range:
+                rangeBuff.Add(newBuff);
+                break;
+
+            case StatType.Movement:
+                movementBuff.Add(newBuff);
+                remainingMovement = remainingMovement + newBuff.impact;
+                break;
+
+            case StatType.Attack:
+                damageBuff.Add(newBuff);
+                break;
+
+            case StatType.Health:
+                healthBuff.Add(newBuff);
+                break;
+        }
+    }
+
+    public void RecalcBuffs()
+    {
+        tempRange = 0;
+        foreach (BuffTracker buff in rangeBuff) { tempRange = tempRange + buff.impact; }
+        totalRange = attackRange + tempRange;
+
+        tempMovement = 0;
+        foreach (BuffTracker buff in movementBuff) { tempMovement = tempMovement + buff.impact; }
+        totalMovement = maxMovement + tempMovement;
+
+        tempDamage = 0;
+        foreach (BuffTracker buff in damageBuff) { tempDamage = tempDamage + buff.impact; }
+        totalDamage = attackDamage + tempDamage;
+
+        tempHealth = 0;
+        foreach (BuffTracker buff in healthBuff) { tempHealth = tempHealth + buff.impact; }
+        totalHealth = maxHealth + tempHealth;
     }
 }
