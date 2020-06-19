@@ -34,8 +34,14 @@ public class MouseManager : MonoBehaviour
 
                 if (selectedToken == null && ReturnTokenUnderMouse() != null && BattleManager.instance.currentTeamTurn == BattleManager.instance.playerTeam)
                 {
-                    selectedToken = ReturnTokenUnderMouse();
-                    selectedToken.movementPreview = true;
+                    if (ReturnTokenUnderMouse().myCard != null)
+                    {
+                        if (ReturnTokenUnderMouse().myCard.cardType == CardType.Creature)
+                        {
+                            selectedToken = ReturnTokenUnderMouse();
+                            selectedToken.movementPreview = true;
+                        }
+                    }
                 }
             }
 
