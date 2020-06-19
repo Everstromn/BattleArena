@@ -53,6 +53,8 @@ public class TokenManager : MonoBehaviour, IPointerClickHandler
     protected int attackRange;
     protected int attackDamage;
 
+
+
     public int maxHealth;
     public int currentHealth = 1;
 
@@ -77,6 +79,7 @@ public class TokenManager : MonoBehaviour, IPointerClickHandler
     protected bool haveSetUp = false;
 
     protected int countToAction;
+    protected int plantCount;
 
     protected virtual void Start()
     {
@@ -314,13 +317,42 @@ public class TokenManager : MonoBehaviour, IPointerClickHandler
         if(BattleManager.instance.currentTeamTurn == myTeam)
         {
         foreach (BuffTracker buff in rangeBuff.ToArray()) { buff.turnsRemaining --; if (buff.turnsRemaining < 1) { rangeBuff.Remove(buff); } }
-        foreach (BuffTracker buff in movementBuff.ToArray()) {  buff.turnsRemaining--;Debug.Log("Buff in Array : Imapct" + buff.impact + " & Turns remaining : " + buff.turnsRemaining); if (buff.turnsRemaining < 1) { movementBuff.Remove(buff); } }
+        foreach (BuffTracker buff in movementBuff.ToArray()) {  buff.turnsRemaining--; if (buff.turnsRemaining < 1) { movementBuff.Remove(buff); } }
         foreach (BuffTracker buff in damageBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { damageBuff.Remove(buff); } }
         foreach (BuffTracker buff in healthBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { healthBuff.Remove(buff); } }
         }
 
         RecalcBuffs();
         
+        if(myCard.cardType == CardType.Creature)
+        {
+            if(myCreatureCard.plantCount > 0)
+            {
+                if(remainingMovement >= totalMovement)
+                {
+                    if(plantCount >= myCreatureCard.plantCount)
+                    {
+                        //Add buffs
+                        if(myCreatureCard.plantRangeBuff != 0) { AddBuff(StatType.Range, myCreatureCard.plantRangeBuff, myCreatureCard.plantDuration); }
+                        if (myCreatureCard.plantMovementBuff != 0) { AddBuff(StatType.Movement, myCreatureCard.plantMovementBuff, myCreatureCard.plantDuration); }
+                        if (myCreatureCard.plantAttackBuff != 0) { AddBuff(StatType.Attack, myCreatureCard.plantAttackBuff, myCreatureCard.plantDuration); }
+                        if (myCreatureCard.plantHealthBuff != 0) { AddBuff(StatType.Health, myCreatureCard.plantHealthBuff, myCreatureCard.plantDuration); }
+
+                        //Reset Plant Count
+                        plantCount = 0;
+                    }
+                    else
+                    {
+                        plantCount++;
+                    }
+                }
+                else
+                {
+                    plantCount = 0;
+                }
+            }
+        }
+
         remainingMovement = totalMovement;
     }
 
@@ -645,18 +677,18 @@ public class TokenManager : MonoBehaviour, IPointerClickHandler
     {
         tempRange = 0;
         foreach (BuffTracker buff in rangeBuff) { tempRange = tempRange + buff.impact; }
-        totalRange = attackRange + tempRange;
+        totalRange = Mathf.Clamp(attackRange + tempRange,0,99);
 
         tempMovement = 0;
         foreach (BuffTracker buff in movementBuff) { tempMovement = tempMovement + buff.impact; }
-        totalMovement = maxMovement + tempMovement;
+        totalMovement = Mathf.Clamp(maxMovement + tempMovement, 0, 99);
 
         tempDamage = 0;
         foreach (BuffTracker buff in damageBuff) { tempDamage = tempDamage + buff.impact; }
-        totalDamage = attackDamage + tempDamage;
+        totalDamage = Mathf.Clamp(attackDamage + tempDamage, 0, 99);
 
         tempHealth = 0;
         foreach (BuffTracker buff in healthBuff) { tempHealth = tempHealth + buff.impact; }
-        totalHealth = maxHealth + tempHealth;
+        totalHealth = Mathf.Clamp(maxHealth + tempHealth, 0, 99);
     }
 }

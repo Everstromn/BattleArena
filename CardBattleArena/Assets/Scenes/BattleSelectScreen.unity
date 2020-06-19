@@ -681,6 +681,7 @@ MonoBehaviour:
   availableDecks:
   - {fileID: 11400000, guid: 4a2fa794b067bed4d913250e7ff3cc94, type: 2}
   - {fileID: 11400000, guid: b2cda62d3e685e1408374383f050a345, type: 2}
+  - {fileID: 11400000, guid: 19ffb520032dc9942b81cca02ebbd4f7, type: 2}
   availableLevels:
   - {fileID: 11400000, guid: 4fe4ec981f51e1844aa624b034255928, type: 2}
   - {fileID: 11400000, guid: e0ebd58cb59a2d54983cd9ae32948d9b, type: 2}

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0a13a2c027b97459ee478dc1f4c828, type: 3}
+  m_Name: Rot
+  m_EditorClassIdentifier: 
+  cardName: Rot
+  cardTint:
+    serializedVersion: 2
+    rgba: 3359814143
+  cost: 10
+  cardImage: {fileID: 21300000, guid: eb8af261eaf717443bbf0d9be73863ab, type: 3}
+  cardText: Deal 5 damage to each enemy creature in range
+  cardType: 1
+  spellType: 0
+  xMin: -2
+  xMax: 2
+  yMin: -1
+  yMax: 1
+  damageAmount: 4
+  spawnToken: {fileID: 0}
+  buffLength: 0
+  rangeBuff: 0
+  movementBuff: 0
+  attackBuff: 0
+  healthBuff: 0
+  goldPerAllyCreature: 0

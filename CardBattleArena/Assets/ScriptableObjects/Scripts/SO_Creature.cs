@@ -25,4 +25,12 @@ public class SO_Creature : SO_Card
     public int movement;
     public bool hasHaste = false;
 
+    [Space(20)]
+    [Header("Creature Type Mechanics")]
+    public int plantCount;
+    public int plantDuration;
+    public int plantMovementBuff;
+    public int plantRangeBuff;
+    public int plantAttackBuff;
+    public int plantHealthBuff;
 }

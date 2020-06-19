@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeaa7f44ee2c94246aebf1a4b1de13a4, type: 3}
+  m_Name: Farm
+  m_EditorClassIdentifier: 
+  cardName: Fledging Farm
+  cardTint:
+    serializedVersion: 2
+    rgba: 3363083520
+  cost: 5
+  cardImage: {fileID: 21300000, guid: 335f52e6d91f35645b0f06b5a9eeed42, type: 3}
+  cardText: 'A basic farm set up by the local peasants, helping to support the troops
+    on the field
+
+    Gold Per Turn : 2'
+  cardType: 2
+  attackRange: 0
+  damage: 0
+  health: 20
+  impactsGoldPerTurn: 1
+  goldPerTurnIncrease: 2
+  canSpawnToken: 0
+  tokenSpawnEveryXTturns: 0
+  tokenToSpawn: {fileID: 0}
+  canChangeNodeType: 0
+  nodeTypeToAdd: 3

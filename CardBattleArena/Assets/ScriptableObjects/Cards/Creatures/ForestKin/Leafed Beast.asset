@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27b7fab80933d94e89748e1c1e4e4cc, type: 3}
+  m_Name: Leafed Beast
+  m_EditorClassIdentifier: 
+  cardName: Leafed Beast
+  cardTint:
+    serializedVersion: 2
+    rgba: 3365105698
+  cost: 20
+  cardImage: {fileID: 21300000, guid: 538020b977d2b144380d64e66fc90c5e, type: 3}
+  cardText: 'Haste, Retaliation (4), Regeneration (4), Plant 3 : Gain 4 attack and
+    2 movement for 4 turns'
+  cardType: 0
+  creatureType: 1
+  attackRange: 1
+  damage: 8
+  health: 20
+  retaliates: 1
+  retaliationDamage: 4
+  regenerates: 1
+  regenerationAmount: 4
+  movement: 4
+  hasHaste: 1
+  plantCount: 3
+  plantDuration: 4
+  plantMovementBuff: 2
+  plantRangeBuff: 0
+  plantAttackBuff: 4
+  plantHealthBuff: 0

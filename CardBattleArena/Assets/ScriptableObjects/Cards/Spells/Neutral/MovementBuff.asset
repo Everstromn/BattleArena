@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0a13a2c027b97459ee478dc1f4c828, type: 3}
+  m_Name: MovementBuff
+  m_EditorClassIdentifier: 
+  cardName: RUN RUN RUN
+  cardTint:
+    serializedVersion: 2
+    rgba: 4282561023
+  cost: 3
+  cardImage: {fileID: 21300000, guid: 1da14f9946ff7cb4092734b0fef7e5f3, type: 3}
+  cardText: 
+  cardType: 1
+  spellType: 2
+  xMin: -1
+  xMax: 1
+  yMin: -1
+  yMax: 1
+  damageAmount: 0
+  spawnToken: {fileID: 0}
+  buffLength: 2
+  rangeBuff: 0
+  movementBuff: 4
+  attackBuff: 0
+  healthBuff: 0
+  goldPerAllyCreature: 0
