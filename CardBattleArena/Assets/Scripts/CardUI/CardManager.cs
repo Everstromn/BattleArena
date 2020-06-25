@@ -58,8 +58,6 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     private SO_Building myBuildingCard;
     private SO_Spell mySpellCard;
 
-    private TokenManager selectedToken = null; // rightclick to preview puck - asset
-
     private bool canBePlayedNow = false;
     public bool CanBePlayedNow
     {
@@ -75,25 +73,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     private void Update()
     {
         if(myCard.cost <= CurrencyManager.instance.ReturnGold()) { cardButtonObj.interactable = true; ActivateCardGlow(playableGlowColor); } else { cardButtonObj.interactable = false; DeActivateCardGlow(); }
-        // rightclick to preview puck
-        if (BattleManager.instance.battleActive)
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (!preview)
-                {
-                    if (selectedToken == null && ReturnTokenUnderMouse() != null)
-                    {
-                        //mycard needs to equal returntokenundermouse - currently displays hand preview
-                        FindObjectOfType<BattleArenaUIManager>().EnableCardPreview(myCard);
-                    }
-                }
-                else
-                {
-                    FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
-                }
-            }
-        }
+
     }
 
     public void UpdateValuesFromCardAsset()
@@ -197,14 +177,5 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
             }
         }
-    }
-
-    private TokenManager ReturnTokenUnderMouse() // rightclick to preview puck - asset
-    {
-        TokenManager mouseToken = null;
-        RaycastHit hitInfo;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Token"))) { mouseToken = hitInfo.collider.GetComponent<TokenManager>(); }
-        return mouseToken;
     }
 }

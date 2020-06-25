@@ -37,6 +37,8 @@ public class BattleArenaUIManager : MonoBehaviour
     [SerializeField] private GameObject inGameMenu = null;
     [SerializeField] private GameObject inGameGlossary = null;
 
+    private TokenManager selectedToken = null; // rightclick to preview puck - asset
+
     private int startingDeckSize = 0;
     private int redrawGoldCost = 3;
     private int cameraCurrentPos = 1;
@@ -111,6 +113,27 @@ public class BattleArenaUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) { RotateCameraPos(-1); }
         if (Input.GetKeyDown(KeyCode.E)) { RotateCameraPos(+1); }
         if (Input.GetKeyDown(KeyCode.Escape)) { LoadInGameMenu(); }
+        // rightclick to preview puck
+        if (BattleManager.instance.battleActive)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+
+                if (selectedToken == null && ReturnTokenUnderMouse() != null)
+                {
+                    if (ReturnTokenUnderMouse().myCard != null)
+                    { 
+                    DisableCardPreview();
+                    EnableCardPreview(ReturnTokenUnderMouse().myCard);
+                    }
+                }
+                
+                else
+                {
+                    FindObjectOfType<BattleArenaUIManager>().DisableCardPreview();
+                }
+            }
+        }
     }
 
     public void UpdateGoldDisplay()
@@ -187,4 +210,13 @@ public class BattleArenaUIManager : MonoBehaviour
 
     public void LoadInGameMenu() { inGameMenu.SetActive(true); }
     public void LoadInGameGlossary() { inGameGlossary.SetActive(true); inGameGlossary.GetComponent<Glossary>().OnLoad(); }
+
+    private TokenManager ReturnTokenUnderMouse() // rightclick to preview puck - asset
+    {
+        TokenManager mouseToken = null;
+        RaycastHit hitInfo;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Token"))) { mouseToken = hitInfo.collider.GetComponent<TokenManager>(); }
+        return mouseToken;
+    }
 }
