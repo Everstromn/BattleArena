@@ -415,7 +415,7 @@ public class TokenManager : MonoBehaviour
         if (currentHealth <= 0) { Death(); }
     }
 
-    protected virtual void Death()
+    public virtual void Death()
     {
         if (myCard.cardType == CardType.Building)
         {

@@ -22,6 +22,8 @@ public class BattleArenaUIManager : MonoBehaviour
     [SerializeField] private GameObject battleEndUI = null;
 
     [SerializeField] private Button proceedButton = null;
+    [SerializeField] private Button redrawButton = null;
+    [SerializeField] private TMP_Text redrawButtonCost = null;
 
     [SerializeField] private CinemachineVirtualCamera cameraPos01 = null;
     [SerializeField] private CinemachineVirtualCamera cameraPos02 = null;
@@ -32,8 +34,11 @@ public class BattleArenaUIManager : MonoBehaviour
     [SerializeField] private Node playerHQNode = null;
     [SerializeField] private Node AIHQNode = null;
 
-    private int startingDeckSize = 0;
+    [SerializeField] private GameObject inGameMenu = null;
+    [SerializeField] private GameObject inGameGlossary = null;
 
+    private int startingDeckSize = 0;
+    private int redrawGoldCost = 3;
     private int cameraCurrentPos = 1;
 
     private void Start()
@@ -44,6 +49,7 @@ public class BattleArenaUIManager : MonoBehaviour
         BattleManager.instance.Arena = arena;
         BattleManager.instance.playerHQNode = playerHQNode;
         BattleManager.instance.AIHQNode = AIHQNode;
+        redrawButtonCost.text = "Redraw Hand \n (" + redrawGoldCost + " Gold)";
     }
 
     public void RotateCameraPos(int val)
@@ -99,8 +105,12 @@ public class BattleArenaUIManager : MonoBehaviour
         if (BattleManager.instance.currentPhase == BattlePhase.Orders && BattleManager.instance.currentTeamTurn == BattleManager.instance.playerTeam)
         { proceedButton.interactable = true; } else { proceedButton.interactable = false; }
 
+        if(redrawGoldCost <= CurrencyManager.instance.ReturnGold() && BattleManager.instance.currentPhase == BattlePhase.Orders && BattleManager.instance.currentTeamTurn == BattleManager.instance.playerTeam)
+        { redrawButton.interactable = true; } else { redrawButton.interactable = false; }
+
         if (Input.GetKeyDown(KeyCode.Q)) { RotateCameraPos(-1); }
         if (Input.GetKeyDown(KeyCode.E)) { RotateCameraPos(+1); }
+        if (Input.GetKeyDown(KeyCode.Escape)) { LoadInGameMenu(); }
     }
 
     public void UpdateGoldDisplay()
@@ -149,4 +159,32 @@ public class BattleArenaUIManager : MonoBehaviour
     {
         battleEndUI.SetActive(true);
     }
+
+    public void RedrawHand()
+    {
+        CurrencyManager.instance.AlterGold(-redrawGoldCost);
+        redrawGoldCost++;
+        redrawButtonCost.text = "Redraw Hand \n(" + redrawGoldCost + " Gold)";
+
+        int cardsToDraw = PlayerDeckManager.instance.playerHand.Count;
+        
+        foreach (SO_Card handCard in PlayerDeckManager.instance.playerHand)
+        {
+            PlayerDeckManager.instance.AddCardToDeck(handCard);
+        }
+
+        PlayerDeckManager.instance.playerHand.Clear();
+        PlayerDeckManager.instance.ShufflePlayerDeck();
+
+        for (int i = 0; i < cardsToDraw; i++)
+        {
+            PlayerDeckManager.instance.DrawCardFromDeck();
+        }
+
+        UpdateGoldDisplay();
+        UpdateHandDisplay();
+    }
+
+    public void LoadInGameMenu() { inGameMenu.SetActive(true); }
+    public void LoadInGameGlossary() { inGameGlossary.SetActive(true); inGameGlossary.GetComponent<Glossary>().OnLoad(); }
 }

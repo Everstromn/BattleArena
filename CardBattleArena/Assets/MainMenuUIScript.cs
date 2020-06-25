@@ -10,7 +10,7 @@ public class MainMenuUIScript : MonoBehaviour
 {
 
     [SerializeField] private SO_Card[] cardFadingCards = null;
-    [SerializeField] private GameObject sessionManager;
+    [SerializeField] private GameObject sessionManager = null;
 
     private void Start()
     {

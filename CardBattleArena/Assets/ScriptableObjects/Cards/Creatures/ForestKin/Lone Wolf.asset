@@ -19,6 +19,7 @@ MonoBehaviour:
   cost: 7
   cardImage: {fileID: 21300000, guid: f854df1f04512ad4a90b8e83c1ed2fae, type: 3}
   cardText: "Haste\t"
+  cardFlavorText: 'Sometimes, you can make quicker progress if you go alone. '
   cardType: 0
   creatureType: 1
   attackRange: 1

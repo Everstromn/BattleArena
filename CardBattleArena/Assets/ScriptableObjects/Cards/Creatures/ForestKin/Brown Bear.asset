@@ -19,6 +19,8 @@ MonoBehaviour:
   cost: 9
   cardImage: {fileID: 21300000, guid: e30f4b96fa88aa942944709dd237b230, type: 3}
   cardText: Retaliation (3)
+  cardFlavorText: Paddingtons bigger, braver and uglier cousin, but don't say that
+    to his face
   cardType: 0
   creatureType: 1
   attackRange: 1

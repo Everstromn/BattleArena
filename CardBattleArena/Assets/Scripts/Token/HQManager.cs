@@ -18,7 +18,7 @@ public class HQManager : TokenManager
         
     }
 
-    protected override void Death()
+    public override void Death()
     {
         HQManager[] players = FindObjectsOfType<HQManager>();
 

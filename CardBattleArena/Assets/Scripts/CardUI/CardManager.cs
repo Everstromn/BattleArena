@@ -29,6 +29,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text c_cardMovementTextObj= null;
     [SerializeField] private TMP_Text c_cardDamageTextObj = null;
     [SerializeField] private TMP_Text c_cardHealthTextObj = null;
+    [SerializeField] private TMP_Text c_cardFlavorTextObj = null;
 
     [Space(20)]
     [Header("Building Card Object References")]
@@ -39,6 +40,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image b_cardImageObj = null;
     [SerializeField] private TMP_Text b_cardDescTextObj = null;
     [SerializeField] private Image b_cardDescTintImageObj = null;
+    [SerializeField] private TMP_Text b_cardFlavorTextObj = null;
 
     [Space(20)]
     [Header("Spell Card Object References")]
@@ -49,13 +51,14 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image s_cardImageObj = null;
     [SerializeField] private TMP_Text s_cardDescTextObj = null;
     [SerializeField] private Image s_cardDescTintImageObj = null;
+    [SerializeField] private TMP_Text s_cardFlavorTextObj = null;
 
     [HideInInspector] public SO_Card myCard;
     private SO_Creature myCreatureCard;
     private SO_Building myBuildingCard;
     private SO_Spell mySpellCard;
 
-    private TokenManager selectedToken; // rightclick to preview puck - asset
+    private TokenManager selectedToken = null; // rightclick to preview puck - asset
 
     private bool canBePlayedNow = false;
     public bool CanBePlayedNow
@@ -110,6 +113,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 c_cardImageObj.sprite = myCard.cardImage;
                 c_cardDescTextObj.text = myCard.cardText;
                 c_cardDescTintImageObj.color = myCard.cardTint;
+                c_cardFlavorTextObj.text = myCard.cardFlavorText;
 
                 c_cardAttackRangeTextObj.text = myCreatureCard.attackRange.ToString();
                 c_cardMovementTextObj.text = myCreatureCard.movement.ToString();
@@ -131,6 +135,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 b_cardImageObj.sprite = myCard.cardImage;
                 b_cardDescTextObj.text = myCard.cardText;
                 b_cardDescTintImageObj.color = myCard.cardTint;
+                b_cardFlavorTextObj.text = myCard.cardFlavorText;
 
             }
 
@@ -147,6 +152,7 @@ public class CardManager : MonoBehaviour, IPointerClickHandler
                 s_cardImageObj.sprite = myCard.cardImage;
                 s_cardDescTextObj.text = myCard.cardText;
                 s_cardDescTintImageObj.color = myCard.cardTint;
+                s_cardFlavorTextObj.text = myCard.cardFlavorText;
 
             }
         }

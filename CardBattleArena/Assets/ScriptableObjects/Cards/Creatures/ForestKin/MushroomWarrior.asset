@@ -19,6 +19,8 @@ MonoBehaviour:
   cost: 4
   cardImage: {fileID: 21300000, guid: bdd5fb95cc2385041b13dd7df5043324, type: 3}
   cardText: 'Haste, Regeneration (2), Plant 2 : Gain 1 Attack for 3 turns'
+  cardFlavorText: Ready to defend his forest from anything, as long as it has a weakness
+    below the knee
   cardType: 0
   creatureType: 1
   attackRange: 1

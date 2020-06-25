@@ -20,6 +20,7 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: 97524abf6c4e8a04bbeda02d936a656b, type: 3}
   cardText: 'Retaliation (5), Regeneration (5), Plant 3 : Gain 1 attack range for
     3 turns'
+  cardFlavorText: He wanders the forest, ensuring all is as it should be
   cardType: 0
   creatureType: 1
   attackRange: 3

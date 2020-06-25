@@ -19,6 +19,7 @@ MonoBehaviour:
   cost: 4
   cardImage: {fileID: 21300000, guid: 396ed1820fff7ec4f955373aff6a236a, type: 3}
   cardText: Haste, Retaliation (2)
+  cardFlavorText: He may be small, but he's grumpy!
   cardType: 0
   creatureType: 1
   attackRange: 1

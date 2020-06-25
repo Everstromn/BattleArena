@@ -12,6 +12,7 @@ public abstract class SO_Card : ScriptableObject
     public int cost;
     public Sprite cardImage;
     [TextArea(5,10)] public string cardText;
+    [TextArea(5, 10)] public string cardFlavorText;
     public CardType cardType = CardType.Creature;
 
 }

@@ -32,7 +32,7 @@ public class TokenHoverManager : MonoBehaviour
     [Space(20)]
     [Header("HQ Hover References")]
     [SerializeField] private GameObject HQHoverObj = null;
-    [SerializeField] private Image hq_hoverImage = null;
+    //[SerializeField] private Image hq_hoverImage = null;
     [SerializeField] private TMP_Text hq_hoverTitle = null;
     [SerializeField] private TMP_Text hq_hoverCurrentHealthText = null;
     [SerializeField] private RectTransform hq_hoverHealthForegroundObj = null;
