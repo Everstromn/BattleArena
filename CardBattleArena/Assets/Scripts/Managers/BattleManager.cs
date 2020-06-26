@@ -76,6 +76,8 @@ public class BattleManager : MonoBehaviour
     private int recurringWaveSpawn = 3;
     private List<SO_Card> recurringWaveSpawnTokens = new List<SO_Card>();
 
+    private int index; //used for ai random token spawn selection
+
     public float minPhaseTime = 0.5f;
 
     private void Start()
@@ -262,7 +264,7 @@ public class BattleManager : MonoBehaviour
         if (turnCounter == waveTwoSpawn) { AISpawnWavesTokens(waveTwoSpawnTokens); }
         if (turnCounter == waveThreeSpawn) { AISpawnWavesTokens(waveThreeSpawnTokens); }
 
-        if (turnCounter > waveThreeSpawn)
+        if ((turnCounter > waveThreeSpawn) && (turnCounter < 35)) //AI deck simulates running out of cards
         {
             int var = turnCounter - waveThreeSpawn;
             if(var % recurringWaveSpawn == 0) { AISpawnWavesTokens(recurringWaveSpawnTokens); }
@@ -292,10 +294,11 @@ public class BattleManager : MonoBehaviour
     private void AISpawnWavesTokens(List<SO_Card> toSpawn)
     {
 
-        foreach (SO_Card tokenToSpawn in toSpawn)
+        foreach (SO_Card tokenToSpawn in toSpawn) //random spawn location for ai tokens
         {
             List<Node> availableSpawn = FindSpawnPoints(tokenToSpawn);
-            AISpawnToken(availableSpawn[0], tokenToSpawn);
+            index = Random.Range(0, availableSpawn.Count);
+            AISpawnToken(availableSpawn[index], tokenToSpawn);
         }
     }
 

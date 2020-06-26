@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnWave: 2
   spawnCreatures:
-  - {fileID: 11400000, guid: acc17d723e8ee9a4f85cfb752a770c3f, type: 2}
+  - {fileID: 11400000, guid: 14d94696bfb6dd44c9fee2f979cedf03, type: 2}
   - {fileID: 11400000, guid: 9dbf2fef482a63c438e20315deff1d0f, type: 2}
-  - {fileID: 11400000, guid: 6195ffc97663eb042a772cb7b99e30cb, type: 2}
+  - {fileID: 11400000, guid: 14d94696bfb6dd44c9fee2f979cedf03, type: 2}

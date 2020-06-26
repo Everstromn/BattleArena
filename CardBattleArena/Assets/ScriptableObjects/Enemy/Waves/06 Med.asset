@@ -16,7 +16,6 @@ MonoBehaviour:
   spawnCreatures:
   - {fileID: 11400000, guid: be470608823babc498623d871f2948ec, type: 2}
   - {fileID: 11400000, guid: dfc331ee82879614195697d97260d09a, type: 2}
-  - {fileID: 11400000, guid: 0404a5aba545c3541b3fb7a4f93860fc, type: 2}
   - {fileID: 11400000, guid: b9bd2905885ac534fadb7f15a5f31e9d, type: 2}
   - {fileID: 11400000, guid: be470608823babc498623d871f2948ec, type: 2}
   - {fileID: 11400000, guid: dfc331ee82879614195697d97260d09a, type: 2}
