@@ -495,11 +495,19 @@ public class TokenManager : MonoBehaviour
                 else { targetNode = BattleManager.instance.playerHQNode; }
 
                 seekerNode = startSpawnNode;
+                Debug.Log("Seeker Node : " + seekerNode.name + " & target Node : " + targetNode.name);
                 myBuildPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
 
                 if (myBuildPath.Count > 0) { Debug.Log("Found Path"); } else { Debug.Log("Found No Path"); }
-
-                SpawnToken(myBuildPath[0], myCreatureCard.undyingToken, myTeam);
+                if(myBuildPath.Count > 0)
+                {
+                    SpawnToken(myBuildPath[0], myCreatureCard.undyingToken, myTeam);
+                }
+                else
+                {
+                    //SpawnToken(BattleManager.instance.playerHQNode, myCreatureCard.undyingToken, myTeam);
+                    Debug.Log("Spawning not successful - oh");
+                }
 
             }
         }

@@ -1,7 +1,5 @@
 Base path: 'C:/Program Files/Unity/Hub/Editor/2019.3.15f1/Editor/Data', plugins path 'C:/Program Files/Unity/Hub/Editor/2019.3.15f1/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-<<<<<<< HEAD
-=======
 Cmd: preprocess
   insize=7605 outsize=2406 ok=1
 Cmd: preprocess
@@ -26,4 +24,3 @@ Cmd: preprocess
   insize=7631 outsize=2417 ok=1
 Cmd: preprocess
   insize=2307 outsize=1077 ok=1
->>>>>>> Graveyard-Creatures
