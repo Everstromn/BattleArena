@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ForestKin
   m_EditorClassIdentifier: 
   deckName: The ForestKin
+  background: {fileID: 21300000, guid: b26425eb9bf76fb4c911494232ea69ab, type: 3}
   deck:
   - {fileID: 11400000, guid: 3e163d876603b004d9bdeed607d01153, type: 2}
   - {fileID: 11400000, guid: 3e163d876603b004d9bdeed607d01153, type: 2}

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0a13a2c027b97459ee478dc1f4c828, type: 3}
+  m_Name: Decay
+  m_EditorClassIdentifier: 
+  cardName: Decay
+  cardTint:
+    serializedVersion: 2
+    rgba: 3359814143
+  cost: 8
+  cardImage: {fileID: 21300000, guid: 28865376cb12a274d8426a9fe1ddf211, type: 3}
+  cardText: Deals 4 damage to creatures in range
+  cardFlavorText: 
+  cardType: 1
+  spellType: 2
+  xMin: -1
+  xMax: 1
+  yMin: -1
+  yMax: 1
+  damageAmount: 4
+  spawnToken: {fileID: 0}
+  buffLength: 0
+  rangeBuff: 0
+  movementBuff: 0
+  attackBuff: 0
+  healthBuff: 0
+  goldPerAllyCreature: 0

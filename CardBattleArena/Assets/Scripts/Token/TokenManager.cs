@@ -67,6 +67,8 @@ public class TokenManager : MonoBehaviour
     public List<BuffTracker> movementBuff = new List<BuffTracker>();
     public List<BuffTracker> damageBuff = new List<BuffTracker>();
     public List<BuffTracker> healthBuff = new List<BuffTracker>();
+    public List<BuffTracker> poisonBuff = new List<BuffTracker>();
+    public List<BuffTracker> stunBuff = new List<BuffTracker>();
 
     public int totalRange;
     public int totalMovement;
@@ -295,12 +297,16 @@ public class TokenManager : MonoBehaviour
 
     public virtual void UpkeepPhase()
     {
-        if(BattleManager.instance.currentTeamTurn == myTeam)
+
+        if (BattleManager.instance.currentTeamTurn == myTeam)
         {
-        foreach (BuffTracker buff in rangeBuff.ToArray()) { buff.turnsRemaining --; if (buff.turnsRemaining < 1) { rangeBuff.Remove(buff); } }
-        foreach (BuffTracker buff in movementBuff.ToArray()) {  buff.turnsRemaining--; if (buff.turnsRemaining < 1) { movementBuff.Remove(buff); } }
-        foreach (BuffTracker buff in damageBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { damageBuff.Remove(buff); } }
-        foreach (BuffTracker buff in healthBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { healthBuff.Remove(buff); } }
+            foreach (BuffTracker buff in poisonBuff) { TakeDamage(buff.impact, false, this); }
+            foreach (BuffTracker buff in rangeBuff.ToArray()) { buff.turnsRemaining --; if (buff.turnsRemaining < 1) { rangeBuff.Remove(buff); } }
+            foreach (BuffTracker buff in movementBuff.ToArray()) {  buff.turnsRemaining--; if (buff.turnsRemaining < 1) { movementBuff.Remove(buff); } }
+            foreach (BuffTracker buff in damageBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { damageBuff.Remove(buff); } }
+            foreach (BuffTracker buff in healthBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { healthBuff.Remove(buff); } }
+            foreach (BuffTracker buff in poisonBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { poisonBuff.Remove(buff); } }
+            foreach (BuffTracker buff in stunBuff.ToArray()) { buff.turnsRemaining--; if (buff.turnsRemaining < 1) { stunBuff.Remove(buff); } }
         }
 
         RecalcBuffs();
@@ -334,39 +340,43 @@ public class TokenManager : MonoBehaviour
             }
         }
 
-        remainingMovement = totalMovement;
+        if(stunBuff.Count == 0)
+        { remainingMovement = totalMovement; }
+        else { remainingMovement = 0; }
     }
 
     public virtual void ActionPhase(float givenDelay)
     {
         actionRemaining = true;
-        
-        // Search for enemy tokens within X squares
-        List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), totalRange);
-        List<TokenManager> enemiesInRange = new List<TokenManager>();
-        foreach (Node node in nodesInRange) { if(node.occupied) { if (node.ReturnTokenOnNode().myTeam != myTeam) { enemiesInRange.Add(node.ReturnTokenOnNode()); } } }
 
-        // Order the enemies based off a value (lowest health first)
-        enemiesInRange.Sort(Utils.SortByHealth);
-
-        foreach (TokenManager token in enemiesInRange) { StartCoroutine(DealDamageAfterTime(totalDamage, givenDelay, token)); }
-
-        if (myCard.cardType == CardType.Building)
+        if (stunBuff.Count == 0)
         {
-            if(myBuildingCard.canSpawnToken)
+            // Search for enemy tokens within X squares
+            List<Node> nodesInRange = myBattleGrid.GetNeighboursInRange(ReturnNodeIAmOn(), totalRange);
+            List<TokenManager> enemiesInRange = new List<TokenManager>();
+            foreach (Node node in nodesInRange) { if (node.occupied) { if (node.ReturnTokenOnNode().myTeam != myTeam) { enemiesInRange.Add(node.ReturnTokenOnNode()); } } }
+
+            // Order the enemies based off a value (lowest health first)
+            enemiesInRange.Sort(Utils.SortByHealth);
+
+            foreach (TokenManager token in enemiesInRange) { StartCoroutine(DealDamageAfterTime(totalDamage, givenDelay, token)); }
+
+            if (myCard.cardType == CardType.Building)
             {
-                if(countToAction > 0)
+                if (myBuildingCard.canSpawnToken)
                 {
-                    countToAction--;
-                }
-                else
-                {
-                    SpawnTokenFromBuilding();
-                    countToAction = myBuildingCard.tokenSpawnEveryXTturns;
+                    if (countToAction > 0)
+                    {
+                        countToAction--;
+                    }
+                    else
+                    {
+                        SpawnTokenFromBuilding();
+                        countToAction = myBuildingCard.tokenSpawnEveryXTturns;
+                    }
                 }
             }
         }
-
         BattleManager.instance.remainingActions--;
     }
 
@@ -379,6 +389,7 @@ public class TokenManager : MonoBehaviour
         if(enemyToBeAttacked != null)
         {
             enemyToBeAttacked.TakeDamage(damage, true, this);
+            if(myCard.cardType == CardType.Creature) { if(myCreatureCard.attacksPoison) { enemyToBeAttacked.AddBuff(StatType.Poison, myCreatureCard.poisonDamagePerTurn, myCreatureCard.poisionTurnLength); } }
             actionRemaining = false;
         }
         BattleManager.instance.remainingActions--;
@@ -426,7 +437,74 @@ public class TokenManager : MonoBehaviour
             }
         }
 
-            Destroy(gameObject);
+        if (myCard.cardType == CardType.Creature)
+        {
+            if (myCreatureCard.undying)
+            {
+                //Find all building tokens
+                TokenManager[] allTokens = FindObjectsOfType<TokenManager>();
+
+                //Check to see if they can trigger Undying Spawn Points & on the right team and add to the list
+                List<TokenManager> undyingBuildings = new List<TokenManager>();
+                foreach (TokenManager token in allTokens)
+                {
+                    if (token.myCard != null)
+                    {
+                        if (token.myCard.cardType == CardType.Building)
+                        {
+                            if(myTeam == token.myTeam && token.myBuildingCard.actAsUndyingSpawnPoint)
+                            {
+                                undyingBuildings.Add(token);
+                            }
+                        }
+                    }
+                }
+                //Declare some variables we are going to use
+                Node startSpawnNode = null;
+                int distanceToHQ = 999;
+
+                //If List > 0, Find closest to HQ
+                if(undyingBuildings.Count > 0)
+                {
+                    foreach (TokenManager building in undyingBuildings)
+                    {
+                        Node buildingTargetNode;
+                        if (myTeam == BattleManager.instance.playerTeam)
+                        { buildingTargetNode = BattleManager.instance.AIHQNode; }
+                        else { buildingTargetNode = BattleManager.instance.playerHQNode; }
+
+                        Node buildingSeekerNode = building.ReturnNodeIAmOn();
+
+                        if (building.GetComponent<PathFinder>().FindPath(buildingSeekerNode, targetNode).Count < distanceToHQ)
+                        {
+                            startSpawnNode = building.ReturnNodeIAmOn();
+                        }
+                    }
+                }
+                //If List == 0, set to node outside of HQ
+                else
+                {
+                    if(myTeam == BattleManager.instance.playerTeam)
+                    { startSpawnNode = BattleManager.instance.playerHQNode; }
+                    else { startSpawnNode = BattleManager.instance.AIHQNode; }
+                }
+
+                //Spawn Token
+                if (myTeam == BattleManager.instance.playerTeam)
+                { targetNode = BattleManager.instance.AIHQNode; }
+                else { targetNode = BattleManager.instance.playerHQNode; }
+
+                seekerNode = startSpawnNode;
+                myBuildPath = GetComponent<PathFinder>().FindPath(seekerNode, targetNode);
+
+                if (myBuildPath.Count > 0) { Debug.Log("Found Path"); } else { Debug.Log("Found No Path"); }
+
+                SpawnToken(myBuildPath[0], myCreatureCard.undyingToken, myTeam);
+
+            }
+        }
+
+        Destroy(gameObject);
     }
 
     protected virtual void OnMouseOver()
@@ -622,7 +700,34 @@ public class TokenManager : MonoBehaviour
             }
         }
 
-            Destroy(gameObject);
+        if (mySpellCard.spellType == SpellType.Stun)
+        {
+            //Find nodes in affected area
+            List<Node> myAffectedArea = new List<Node>();
+            ArenaGrid myBattleGrid = FindObjectOfType<ArenaGrid>();
+            mySpellCard = myCard as SO_Spell;
+            myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(ReturnNodeIAmOn(), mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
+            myAffectedArea.Add(ReturnNodeIAmOn());
+
+            //Check for enemies on each node
+            List<TokenManager> enemiesInRange = new List<TokenManager>();
+            foreach (Node node in myAffectedArea)
+            {
+                if (node.occupied)
+                {
+                    if (node.ReturnTokenOnNode().myTeam != myTeam)
+                    {
+                        enemiesInRange.Add(node.ReturnTokenOnNode());
+                    }
+                }
+            }
+
+            foreach (TokenManager enemy in enemiesInRange)
+            {
+                enemy.AddBuff(StatType.Stun, 0, mySpellCard.buffLength); Debug.Log("Added DeBuff : Stun"); }
+            }
+
+        Destroy(gameObject);
 
     }
 
@@ -650,6 +755,12 @@ public class TokenManager : MonoBehaviour
 
             case StatType.Health:
                 healthBuff.Add(newBuff);
+                break;
+            case StatType.Poison:
+                poisonBuff.Add(newBuff);
+                break;
+            case StatType.Stun:
+                stunBuff.Add(newBuff);
                 break;
         }
     }
