@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27b7fab80933d94e89748e1c1e4e4cc, type: 3}
+  m_Name: Bat
+  m_EditorClassIdentifier: 
+  cardName: Screech Bat
+  cardTint:
+    serializedVersion: 2
+    rgba: 3365105698
+  cost: 4
+  cardImage: {fileID: 21300000, guid: 87802f086b3bde646b9a473487adcfe9, type: 3}
+  cardText: Haste
+  cardFlavorText: Often found within the graveyard, by the time you hear them it
+    may be too late
+  cardType: 0
+  creatureType: 0
+  attackRange: 1
+  damage: 2
+  attacksPoison: 0
+  poisonDamagePerTurn: 0
+  poisionTurnLength: 0
+  health: 6
+  retaliates: 0
+  retaliationDamage: 0
+  regenerates: 0
+  regenerationAmount: 0
+  movement: 4
+  hasHaste: 1
+  plantCount: 0
+  plantDuration: 0
+  plantMovementBuff: 0
+  plantRangeBuff: 0
+  plantAttackBuff: 0
+  plantHealthBuff: 0
+  undying: 0
+  undyingToken: {fileID: 0}

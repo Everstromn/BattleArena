@@ -11,6 +11,9 @@ public class SO_Creature : SO_Card
     [Header("Creature Card Attack Info")]
     public int attackRange;
     public int damage;
+    public bool attacksPoison;
+    public int poisonDamagePerTurn;
+    public int poisionTurnLength;
 
     [Space(20)]
     [Header("Creature Defence Settings")]
@@ -33,4 +36,7 @@ public class SO_Creature : SO_Card
     public int plantRangeBuff;
     public int plantAttackBuff;
     public int plantHealthBuff;
+    [Space(10)]
+    public bool undying;
+    public SO_Creature undyingToken;
 }

@@ -24,4 +24,6 @@ public class SO_Building : SO_Card
     [Space(10)]
     public bool canChangeNodeType = false;
     public CardType nodeTypeToAdd = CardType.Nuetral;
+    [Space(10)]
+    public bool actAsUndyingSpawnPoint = false;
 }

@@ -682,6 +682,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a2fa794b067bed4d913250e7ff3cc94, type: 2}
   - {fileID: 11400000, guid: b2cda62d3e685e1408374383f050a345, type: 2}
   - {fileID: 11400000, guid: 19ffb520032dc9942b81cca02ebbd4f7, type: 2}
+  - {fileID: 11400000, guid: b55157a0c9040bb469fc8f984f03ec83, type: 2}
   availableLevels:
   - {fileID: 11400000, guid: 4fe4ec981f51e1844aa624b034255928, type: 2}
   - {fileID: 11400000, guid: e0ebd58cb59a2d54983cd9ae32948d9b, type: 2}
@@ -862,7 +863,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 38.95
+  m_fontSize: 58.45
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1258,8 +1259,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1316939487}
   m_HandleRect: {fileID: 1316939486}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.66666675
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1687,7 +1688,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28.4
+  m_fontSize: 42.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2041,8 +2042,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1812020130}
   m_HandleRect: {fileID: 1812020129}
   m_Direction: 2
-  m_Value: 0.99999917
-  m_Size: 0.6666666
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2289,7 +2290,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 38.95
+  m_fontSize: 58.45
   m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2820,7 +2821,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28.4
+  m_fontSize: 42.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3167,7 +3168,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.7
+  m_fontSize: 72
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3384,7 +3385,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 28.4
+  m_fontSize: 42.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3767,8 +3768,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 829810660}
   m_HandleRect: {fileID: 829810659}
   m_Direction: 2
-  m_Value: 1.0000008
-  m_Size: 0.6666666
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

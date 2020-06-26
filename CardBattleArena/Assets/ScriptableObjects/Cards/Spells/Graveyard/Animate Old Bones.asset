@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0a13a2c027b97459ee478dc1f4c828, type: 3}
+  m_Name: Animate Old Bones
+  m_EditorClassIdentifier: 
+  cardName: Animate Old Bones
+  cardTint:
+    serializedVersion: 2
+    rgba: 3359814143
+  cost: 9
+  cardImage: {fileID: 21300000, guid: 72472459e9ec07f43a6728be78bac1fb, type: 3}
+  cardText: Increase the Movement of your tokens by 5 for 2 turns
+  cardFlavorText: 
+  cardType: 1
+  spellType: 2
+  xMin: -1
+  xMax: 1
+  yMin: -1
+  yMax: 1
+  damageAmount: 0
+  spawnToken: {fileID: 0}
+  buffLength: 2
+  rangeBuff: 0
+  movementBuff: 5
+  attackBuff: 0
+  healthBuff: 0
+  goldPerAllyCreature: 0
