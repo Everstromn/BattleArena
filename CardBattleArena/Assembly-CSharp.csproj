@@ -72,6 +72,8 @@
     <Compile Include="Assets\LevelDisplayPrefabScript.cs" />
     <Compile Include="Assets\MainMenuUIScript.cs" />
     <Compile Include="Assets\MechanicPrefab.cs" />
+    <Compile Include="Assets\MusicSliderController.cs" />
+    <Compile Include="Assets\SFXSliderController.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Building.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Card.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Creature.cs" />

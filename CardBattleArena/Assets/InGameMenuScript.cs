@@ -6,6 +6,7 @@ public class InGameMenuScript : MonoBehaviour
 {
     [SerializeField] private GameObject concedeGamePanel = null;
     [SerializeField] private CanvasGroup myCanvasGroup = null;
+    [SerializeField] private GameObject optionsPanel = null;
 
     public void CloseMenu()
     {
@@ -27,10 +28,10 @@ public class InGameMenuScript : MonoBehaviour
         SoundsManager.instance.PlayClickSound();
     }
 
-    public void LoadGlossary()
-    {
-        FindObjectOfType<BattleArenaUIManager>().LoadInGameGlossary();
-    }
+    public void LoadGlossary() { FindObjectOfType<BattleArenaUIManager>().LoadInGameGlossary(); }
+    public void LoadOptions() { optionsPanel.SetActive(true); myCanvasGroup.interactable = false; SoundsManager.instance.PlayClickSound(); }
+
+    public void CloseOptions() { optionsPanel.SetActive(false); myCanvasGroup.interactable = true; SoundsManager.instance.PlayClickSound(); }
 
     public void ConfirmConcedeGame()
     {

@@ -407,6 +407,7 @@ public class TokenManager : MonoBehaviour
 
         if (retailiate && myCard != null)
         {
+
             if (myCard.cardType == CardType.Creature)
             {
                 agressor.TakeDamage(myCreatureCard.retaliationDamage, false, this);
