@@ -97,6 +97,7 @@ public class BattleArenaUIManager : MonoBehaviour
     public void TriggerNextPhase()
     {
         BattleManager.instance.remainingActions = 0;
+        SoundsManager.instance.PlayClickSound();
     }
 
     private void Update()
@@ -175,6 +176,7 @@ public class BattleArenaUIManager : MonoBehaviour
 
         cardPreviewObj.GetComponent<CardManager>().myCard = givenCard;
         cardPreviewObj.GetComponent<CardManager>().UpdateValuesFromCardAsset();
+        SoundsManager.instance.PlayClickSound();
     }
     public void DisableCardPreview() { cardPreviewObj.SetActive(false); }
 
@@ -185,6 +187,7 @@ public class BattleArenaUIManager : MonoBehaviour
 
     public void RedrawHand()
     {
+        SoundsManager.instance.PlayClickSound();
         CurrencyManager.instance.AlterGold(-redrawGoldCost);
         redrawGoldCost++;
         redrawButtonCost.text = "Redraw Hand \n(" + redrawGoldCost + " Gold)";
@@ -206,9 +209,10 @@ public class BattleArenaUIManager : MonoBehaviour
 
         UpdateGoldDisplay();
         UpdateHandDisplay();
+
     }
 
-    public void LoadInGameMenu() { inGameMenu.SetActive(true); }
+    public void LoadInGameMenu() { inGameMenu.SetActive(true); SoundsManager.instance.PlayClickSound(); }
     public void LoadInGameGlossary() { inGameGlossary.SetActive(true); inGameGlossary.GetComponent<Glossary>().OnLoad(); }
 
     private TokenManager ReturnTokenUnderMouse() // rightclick to preview puck - asset

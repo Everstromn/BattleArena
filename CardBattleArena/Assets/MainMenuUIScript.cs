@@ -27,6 +27,7 @@ public class MainMenuUIScript : MonoBehaviour
 
     public void LoadMainBattle()
     {
+        SoundsManager.instance.PlayClickSound();
         SceneManager.LoadScene(1);
     }
 

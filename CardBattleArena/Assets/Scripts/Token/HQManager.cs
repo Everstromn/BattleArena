@@ -31,11 +31,13 @@ public class HQManager : TokenManager
         {
             FindObjectOfType<BattleArenaUIManager>().EnableBattleEnd();
             FindObjectOfType<BattleEndUI>().UpdateDisplay("DEFEAT", BattleManager.instance.turnCounter, playerHealth);
+            SoundsManager.instance.PlayDefeatSound();
         }
         else
         {
             FindObjectOfType<BattleArenaUIManager>().EnableBattleEnd();
             FindObjectOfType<BattleEndUI>().UpdateDisplay("VICTORY", BattleManager.instance.turnCounter, playerHealth);
+            SoundsManager.instance.PlayVictorySound();
         }
     }
 

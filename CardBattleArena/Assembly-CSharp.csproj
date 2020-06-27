@@ -72,6 +72,8 @@
     <Compile Include="Assets\LevelDisplayPrefabScript.cs" />
     <Compile Include="Assets\MainMenuUIScript.cs" />
     <Compile Include="Assets\MechanicPrefab.cs" />
+    <Compile Include="Assets\MusicSliderController.cs" />
+    <Compile Include="Assets\SFXSliderController.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Building.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Card.cs" />
     <Compile Include="Assets\ScriptableObjects\Scripts\SO_Creature.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Assets\Scripts\Token\TokenManager.cs" />
     <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
     <Compile Include="Assets\Scripts\Utilities\Utils.cs" />
+    <Compile Include="Assets\SoundsManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
