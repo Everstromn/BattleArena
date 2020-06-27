@@ -383,11 +383,14 @@ public class TokenManager : MonoBehaviour
     protected virtual IEnumerator DealDamageAfterTime(int damage, float currentDelay, TokenManager enemyToBeAttacked)
     {
         BattleManager.instance.remainingActions++;
-
+        Debug.Log("DealDamageAfterTime Initial");
+        Debug.Log(enemyToBeAttacked);
         yield return new WaitForSeconds(currentDelay + 0.75f);
+        Debug.Log(enemyToBeAttacked); //not being printed
 
-        if(enemyToBeAttacked != null)
+        if (enemyToBeAttacked != null)
         {
+            Debug.Log("DealDamageAfterTime enemynotnull");
             enemyToBeAttacked.TakeDamage(damage, true, this);
             if(myCard.cardType == CardType.Creature) { if(myCreatureCard.attacksPoison) { enemyToBeAttacked.AddBuff(StatType.Poison, myCreatureCard.poisonDamagePerTurn, myCreatureCard.poisionTurnLength); } }
             actionRemaining = false;
@@ -398,18 +401,22 @@ public class TokenManager : MonoBehaviour
     public virtual void TakeDamage(int damage, bool retailiate, TokenManager agressor)
     {
         currentHealth = currentHealth - damage;
+        Debug.Log("1");
 
         if (retailiate && myCard != null)
         {
+            Debug.Log("2");
             if (myCard.cardType == CardType.Creature)
             {
                 agressor.TakeDamage(myCreatureCard.retaliationDamage, false, this);
+                Debug.Log("3");
             }
         }
 
         if(damage > 0)
         {
             StartCoroutine(ActivateDamageDisplay(damage));
+            Debug.Log("4");
         }
     }
 
@@ -611,6 +618,8 @@ public class TokenManager : MonoBehaviour
             foreach (TokenManager token in enemiesInRange)
             {
                 StartCoroutine(DealDamageAfterTime(mySpellCard.damageAmount, 0, token));
+                Debug.Log("Spell damage is " + mySpellCard.damageAmount);
+                Debug.Log("Spell target is " + token.myCard.cardName);
             }
         }
 

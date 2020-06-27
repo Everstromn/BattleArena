@@ -22,13 +22,17 @@ MonoBehaviour:
 
     Retaliation :
     2'
+  cardFlavorText: 
   cardType: 0
   creatureType: 2
   attackRange: 2
   damage: 3
+  attacksPoison: 0
+  poisonDamagePerTurn: 0
+  poisionTurnLength: 0
   health: 12
   retaliates: 1
-  retaliationDamage: 0
+  retaliationDamage: 2
   regenerates: 0
   regenerationAmount: 0
   movement: 2
@@ -39,3 +43,5 @@ MonoBehaviour:
   plantRangeBuff: 0
   plantAttackBuff: 0
   plantHealthBuff: 0
+  undying: 0
+  undyingToken: {fileID: 0}

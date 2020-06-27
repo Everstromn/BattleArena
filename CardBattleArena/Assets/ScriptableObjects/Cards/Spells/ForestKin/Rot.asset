@@ -19,13 +19,14 @@ MonoBehaviour:
   cost: 10
   cardImage: {fileID: 21300000, guid: eb8af261eaf717443bbf0d9be73863ab, type: 3}
   cardText: Deal 5 damage to each enemy creature in range
+  cardFlavorText: 
   cardType: 1
   spellType: 0
   xMin: -2
   xMax: 2
   yMin: -1
   yMax: 1
-  damageAmount: 4
+  damageAmount: 5
   spawnToken: {fileID: 0}
   buffLength: 0
   rangeBuff: 0

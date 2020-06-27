@@ -19,13 +19,17 @@ MonoBehaviour:
   cost: 20
   cardImage: {fileID: 21300000, guid: 635343b53f0193642a95f88692014678, type: 3}
   cardText: 'Retaliation : 4'
+  cardFlavorText: 
   cardType: 0
   creatureType: 0
   attackRange: 3
   damage: 8
+  attacksPoison: 0
+  poisonDamagePerTurn: 0
+  poisionTurnLength: 0
   health: 32
   retaliates: 1
-  retaliationDamage: 0
+  retaliationDamage: 4
   regenerates: 0
   regenerationAmount: 0
   movement: 2
@@ -36,3 +40,5 @@ MonoBehaviour:
   plantRangeBuff: 0
   plantAttackBuff: 0
   plantHealthBuff: 0
+  undying: 0
+  undyingToken: {fileID: 0}
