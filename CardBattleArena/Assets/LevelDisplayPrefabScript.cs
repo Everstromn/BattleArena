@@ -21,5 +21,6 @@ public class LevelDisplayPrefabScript : MonoBehaviour
     {
         BattleManager.instance.battleLevel = myLevel;
         FindObjectOfType<BattleSelectScreenUI>().UpdateLevelDisplay(myLevel);
+        SoundsManager.instance.PlayClickSound();
     }
 }

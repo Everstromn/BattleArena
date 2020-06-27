@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -22,6 +23,7 @@ public class BattleSelectScreenUI : MonoBehaviour
     public SO_Level[] availableLevels;
     public SO_EnemyWaves[] availableEnemies;
 
+    public Button loadBattleButton;
 
     private void Start()
     {
@@ -44,8 +46,16 @@ public class BattleSelectScreenUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(BattleManager.instance.battleLevel != null && BattleManager.instance.enemyDeck != null && PlayerDeckManager.instance.assignedDeck != null)
+        { loadBattleButton.interactable = true; }
+        else { loadBattleButton.interactable = false; }
+    }
+
     public void LoadLevel()
     {
+        SoundsManager.instance.PlayClickSound();
         SceneManager.LoadScene(BattleManager.instance.battleLevel.sceneIndex);
     }
 

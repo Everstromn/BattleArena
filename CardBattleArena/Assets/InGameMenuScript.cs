@@ -10,18 +10,21 @@ public class InGameMenuScript : MonoBehaviour
     public void CloseMenu()
     {
         gameObject.SetActive(false);
+        SoundsManager.instance.PlayClickSound();
     }
 
     public void ConcedeGame()
     {
         concedeGamePanel.SetActive(true);
         myCanvasGroup.interactable = false;
+        SoundsManager.instance.PlayClickSound();
     }
 
     public void FightOn()
     {
         concedeGamePanel.SetActive(false);
         myCanvasGroup.interactable = true;
+        SoundsManager.instance.PlayClickSound();
     }
 
     public void LoadGlossary()
@@ -40,6 +43,7 @@ public class InGameMenuScript : MonoBehaviour
         }
 
         myCanvasGroup.interactable = false;
+        SoundsManager.instance.PlayClickSound();
         CloseMenu();
     }
 

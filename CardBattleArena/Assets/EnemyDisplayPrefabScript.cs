@@ -21,5 +21,6 @@ public class EnemyDisplayPrefabScript : MonoBehaviour
         BattleManager.instance.enemyDeck = myEnemy;
         BattleManager.instance.UpdateAIWaves();
         FindObjectOfType<BattleSelectScreenUI>().UpdateEnemyDisplay(myEnemy);
+        SoundsManager.instance.PlayClickSound();
     }
 }

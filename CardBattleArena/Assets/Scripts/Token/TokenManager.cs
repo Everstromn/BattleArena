@@ -15,6 +15,10 @@ public class TokenManager : MonoBehaviour
     public SO_Building myBuildingCard;
     public SO_Spell mySpellCard;
 
+    public AudioClip movementSound;
+    public AudioClip deathSound;
+    public AudioClip attackSound;
+
     public Team myTeam;
 
     protected MeshRenderer myMeshRenderer;
@@ -282,6 +286,7 @@ public class TokenManager : MonoBehaviour
                 Vector3 tilePosition = new Vector3(myPath[i].transform.position.x, myPath[i].transform.position.y + 0.5f, myPath[i].transform.position.z);
                 transform.position = tilePosition;
                 usedMovement++;
+                if(movementSound != null) { SoundsManager.instance.PlayGivenSound(movementSound); } else { SoundsManager.instance.PlayMoveSound(); }
                 yield return new WaitForSeconds(delayPerStep);
             }
         }
@@ -391,6 +396,7 @@ public class TokenManager : MonoBehaviour
             enemyToBeAttacked.TakeDamage(damage, true, this);
             if(myCard.cardType == CardType.Creature) { if(myCreatureCard.attacksPoison) { enemyToBeAttacked.AddBuff(StatType.Poison, myCreatureCard.poisonDamagePerTurn, myCreatureCard.poisionTurnLength); } }
             actionRemaining = false;
+            if (attackSound != null) { SoundsManager.instance.PlayGivenSound(attackSound); } else { SoundsManager.instance.PlayAttackSound(); }
         }
         BattleManager.instance.remainingActions--;
     }
@@ -511,7 +517,7 @@ public class TokenManager : MonoBehaviour
 
             }
         }
-
+        if (deathSound != null) { SoundsManager.instance.PlayGivenSound(deathSound); }
         Destroy(gameObject);
     }
 

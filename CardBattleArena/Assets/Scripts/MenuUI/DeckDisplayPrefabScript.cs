@@ -21,5 +21,6 @@ public class DeckDisplayPrefabScript : MonoBehaviour
         PlayerDeckManager.instance.assignedDeck = myDeck;
         PlayerDeckManager.instance.RefreshDeck();
         FindObjectOfType<BattleSelectScreenUI>().UpdateDeckDisplay(myDeck);
+        SoundsManager.instance.PlayClickSound();
     }
 }
