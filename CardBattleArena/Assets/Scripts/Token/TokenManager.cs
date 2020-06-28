@@ -388,14 +388,11 @@ public class TokenManager : MonoBehaviour
     protected virtual IEnumerator DealDamageAfterTime(int damage, float currentDelay, TokenManager enemyToBeAttacked)
     {
         BattleManager.instance.remainingActions++;
-        Debug.Log("DealDamageAfterTime Initial");
-        Debug.Log(enemyToBeAttacked);
+
         yield return new WaitForSeconds(currentDelay + 0.75f);
-        Debug.Log(enemyToBeAttacked); //not being printed
 
         if (enemyToBeAttacked != null)
         {
-            Debug.Log("DealDamageAfterTime enemynotnull");
             enemyToBeAttacked.TakeDamage(damage, true, this);
             if(myCard.cardType == CardType.Creature) { if(myCreatureCard.attacksPoison) { enemyToBeAttacked.AddBuff(StatType.Poison, myCreatureCard.poisonDamagePerTurn, myCreatureCard.poisionTurnLength); } }
             actionRemaining = false;
@@ -407,26 +404,18 @@ public class TokenManager : MonoBehaviour
     public virtual void TakeDamage(int damage, bool retailiate, TokenManager agressor)
     {
         currentHealth = currentHealth - damage;
-        Debug.Log("1");
 
         if (retailiate && myCard != null)
         {
-<<<<<<< HEAD
-            Debug.Log("2");
-=======
-
->>>>>>> Audio-Branch
             if (myCard.cardType == CardType.Creature)
             {
                 agressor.TakeDamage(myCreatureCard.retaliationDamage, false, this);
-                Debug.Log("3");
             }
         }
 
         if(damage > 0)
         {
             StartCoroutine(ActivateDamageDisplay(damage));
-            Debug.Log("4");
         }
     }
 
@@ -636,9 +625,9 @@ public class TokenManager : MonoBehaviour
             foreach (TokenManager token in enemiesInRange)
             {
                 StartCoroutine(DealDamageAfterTime(mySpellCard.damageAmount, 0, token));
-                Debug.Log("Spell damage is " + mySpellCard.damageAmount);
-                Debug.Log("Spell target is " + token.myCard.cardName);
+
             }
+            StartCoroutine(DestroyAfterTime(1));
         }
 
         if (mySpellCard.spellType == SpellType.Buff)
@@ -665,16 +654,14 @@ public class TokenManager : MonoBehaviour
 
             foreach (TokenManager ally in alliesInRange)
             {
-                Debug.Log("Detected Token : " + ally.name);
-
-                if (mySpellCard.rangeBuff != 0) { ally.AddBuff(StatType.Range, mySpellCard.rangeBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Range"); }
-                if (mySpellCard.movementBuff != 0) { ally.AddBuff(StatType.Movement, mySpellCard.movementBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Movement"); }
-                if (mySpellCard.attackBuff != 0) { ally.AddBuff(StatType.Attack, mySpellCard.attackBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Attack"); }
-                if (mySpellCard.healthBuff != 0) { ally.AddBuff(StatType.Health, mySpellCard.healthBuff, mySpellCard.buffLength); Debug.Log("Added Buff : Health"); }
+                if (mySpellCard.rangeBuff != 0) { ally.AddBuff(StatType.Range, mySpellCard.rangeBuff, mySpellCard.buffLength); }
+                if (mySpellCard.movementBuff != 0) { ally.AddBuff(StatType.Movement, mySpellCard.movementBuff, mySpellCard.buffLength); }
+                if (mySpellCard.attackBuff != 0) { ally.AddBuff(StatType.Attack, mySpellCard.attackBuff, mySpellCard.buffLength); }
+                if (mySpellCard.healthBuff != 0) { ally.AddBuff(StatType.Health, mySpellCard.healthBuff, mySpellCard.buffLength); }
 
                 ally.RecalcBuffs();
             }
-
+            StartCoroutine(DestroyAfterTime(0));
         }
 
         if (mySpellCard.spellType == SpellType.Debuff)
@@ -725,6 +712,7 @@ public class TokenManager : MonoBehaviour
                     }
                 }
             }
+            StartCoroutine(DestroyAfterTime(0));
         }
 
         if (mySpellCard.spellType == SpellType.Stun)
@@ -752,10 +740,15 @@ public class TokenManager : MonoBehaviour
             foreach (TokenManager enemy in enemiesInRange)
             {
                 enemy.AddBuff(StatType.Stun, 0, mySpellCard.buffLength); Debug.Log("Added DeBuff : Stun"); }
+                StartCoroutine(DestroyAfterTime(0));
             }
 
-        Destroy(gameObject);
+    }
 
+    public IEnumerator DestroyAfterTime(float _val)
+    {
+        yield return new WaitForSeconds(_val);
+        Destroy(gameObject);
     }
 
     public void AddBuff(StatType statToBuff, int valToBuff, int turnsToBuff)
