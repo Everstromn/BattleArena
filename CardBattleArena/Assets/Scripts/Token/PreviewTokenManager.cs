@@ -39,6 +39,7 @@ public class PreviewTokenManager : MonoBehaviour
             RemoveHighlights();
             HighlightSpellEffectArea();
         }
+        if(Input.GetMouseButtonDown(1)) { ReturnTokenToHand(); }
     }
 
     private void UpdateLocation()
@@ -101,5 +102,12 @@ public class PreviewTokenManager : MonoBehaviour
         myAffectedArea = myBattleGrid.GetNeighboursInRangeVariableSize(hoveredNode, mySpellCard.xMin, mySpellCard.xMax, mySpellCard.yMin, mySpellCard.yMax);
         myAffectedArea.Add(hoveredNode);
         foreach (Node node in myAffectedArea) { node.HighlightMoveNow(); }
+    }
+
+    private void ReturnTokenToHand()
+    {
+        PlayerDeckManager.instance.playerHand.Add(myCard);
+        FindObjectOfType<BattleArenaUIManager>().UpdateHandDisplay();
+        Destroy(gameObject);
     }
 }

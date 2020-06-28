@@ -44,4 +44,10 @@ public class CurrencyManager : MonoBehaviour
         goldPerTurnAddition = goldPerTurnAddition + val;
     }
 
+    public void ResetCurrencyState()
+    {
+        goldPerTurnAddition = 0;
+        gold = 4;
+    }
+
 }

@@ -27,6 +27,8 @@ public class BattleSelectScreenUI : MonoBehaviour
 
     private void Start()
     {
+        BattleManager.instance.ResetBattleGameState();
+
         foreach (SO_Deck deck in availableDecks)
         {
             GameObject newDeck = Instantiate(deckDisplayPrefab, deckDisplay.transform);

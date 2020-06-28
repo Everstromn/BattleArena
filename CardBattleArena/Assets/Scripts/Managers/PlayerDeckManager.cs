@@ -71,4 +71,11 @@ public class PlayerDeckManager : MonoBehaviour
         }
     }
 
+    public void ResetDeck()
+    {
+        assignedDeck = null;
+        playerDeck.Clear();
+        playerHand.Clear();
+    }
+
 }

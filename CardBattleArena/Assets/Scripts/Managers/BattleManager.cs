@@ -76,7 +76,7 @@ public class BattleManager : MonoBehaviour
     private int recurringWaveSpawn = 3;
     private List<SO_Card> recurringWaveSpawnTokens = new List<SO_Card>();
 
-    private int index; //used for ai random token spawn selection
+    private int randomNodeIndex; //used for ai random token spawn selection
 
     public float minPhaseTime = 0.5f;
 
@@ -297,8 +297,8 @@ public class BattleManager : MonoBehaviour
         foreach (SO_Card tokenToSpawn in toSpawn) //random spawn location for ai tokens
         {
             List<Node> availableSpawn = FindSpawnPoints(tokenToSpawn);
-            index = Random.Range(0, availableSpawn.Count);
-            AISpawnToken(availableSpawn[index], tokenToSpawn);
+            randomNodeIndex = Random.Range(0, availableSpawn.Count);
+            AISpawnToken(availableSpawn[randomNodeIndex], tokenToSpawn);
         }
     }
 
@@ -344,5 +344,26 @@ public class BattleManager : MonoBehaviour
         recurringWaveSpawnTokens.Clear();
         recurringWaveSpawn = enemyDeck.enemyWaves[3].spawnWave;
         recurringWaveSpawnTokens.AddRange(enemyDeck.enemyWaves[3].spawnCreatures);
+    }
+
+    public void ResetBattleGameState()
+    {
+        //Reset Turns
+        turnCounter = 0;
+        remainingActions = 0;
+        battleActive = false;
+        currentPhase = BattlePhase.Upkeep;
+
+        //Reset Gold
+        CurrencyManager.instance.ResetCurrencyState();
+
+        //Reset Player Deck
+        PlayerDeckManager.instance.ResetDeck();
+
+        //Reset Enemy Deck
+        enemyDeck = null;
+
+        //Reset Level
+        battleLevel = null;
     }
 }
