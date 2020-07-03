@@ -679,8 +679,6 @@ MonoBehaviour:
   enemyDisplayPrefab: {fileID: 2492438143359766611, guid: 2120e4967c5ba3942997cd85e4df37b2,
     type: 3}
   availableDecks:
-  - {fileID: 11400000, guid: 4a2fa794b067bed4d913250e7ff3cc94, type: 2}
-  - {fileID: 11400000, guid: b2cda62d3e685e1408374383f050a345, type: 2}
   - {fileID: 11400000, guid: 19ffb520032dc9942b81cca02ebbd4f7, type: 2}
   - {fileID: 11400000, guid: b55157a0c9040bb469fc8f984f03ec83, type: 2}
   availableLevels:

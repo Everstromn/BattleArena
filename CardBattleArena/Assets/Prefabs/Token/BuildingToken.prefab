@@ -182,7 +182,7 @@ Transform:
   m_GameObject: {fileID: 1155419587838644216}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.51, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.09, y: 0.09, z: 1}
   m_Children: []
   m_Father: {fileID: 2189544016197522717}
   m_RootOrder: 2
@@ -226,7 +226,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 335f52e6d91f35645b0f06b5a9eeed42, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d69d95fd6f92ac40b91b82b455bdc36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -292,6 +292,10 @@ MonoBehaviour:
   myCard: {fileID: 0}
   myCreatureCard: {fileID: 0}
   myBuildingCard: {fileID: 0}
+  mySpellCard: {fileID: 0}
+  movementSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  attackSound: {fileID: 0}
   myTeam: 0
   baseTokenMaterial: {fileID: 2100000, guid: de761bbba57c5064a9b10cf5fe09dbef, type: 2}
   blueTeamCreature: {fileID: 2100000, guid: 94872cb9853a0ea4c8de2f806d3100a5, type: 2}
@@ -311,6 +315,14 @@ MonoBehaviour:
   currentHealth: 1
   damageDispalyObj: {fileID: 7073832695443355241}
   damageDisplayTextObj: {fileID: 6490627357481604460}
+  tempRange: 0
+  tempMovement: 0
+  tempDamage: 0
+  tempHealth: 0
+  totalRange: 0
+  totalMovement: 0
+  totalDamage: 0
+  totalHealth: 0
 --- !u!33 &2189544016197522706
 MeshFilter:
   m_ObjectHideFlags: 0
